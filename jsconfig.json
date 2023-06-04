@@ -1,0 +1,46 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "~components/*": [
+                "src/components/*"
+            ],
+            "~pages/*": [
+                "src/pages/*"
+            ],
+            "~router/*": [
+                "src/router/*"
+            ],
+            "~styles/*": [
+                "src/styles/*"
+            ],
+            "~/*": [
+                "src/*"
+            ],
+            "~utils/*": [
+                "src/utils/*"
+            ],
+            "~partials/*": [
+                "src/partials/*"
+            ],
+            "~signin/*": [
+                "src/pages/signin/*"
+            ],
+            "~login/*": [
+                "src/pages/login/*"
+            ],
+            "~404/*": [
+                "src/pages/404/*"
+            ],
+            "~500/*": [
+                "src/pages/500/*"
+            ],
+            "~prifile/*": [
+                "src/pages/prifile/*"
+            ],
+            "~profile/*": [
+                "src/pages/profile/*"
+            ]
+        }
+    }
+}
