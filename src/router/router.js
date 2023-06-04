@@ -14,13 +14,19 @@ const routes = {
     "/signin": "/src/pages/signin/index.html"
 };
 
+const routes = {
+    Main: "/"
+};
+
 const handleLocation = async () => {
     const path = window.location.pathname;
-    console.log('first', path);
     const route = routes[path] || routes[404];
-    const html = await fetch(route).then((data) => data.text());
-    console.log('html', html);
-    document.getElementById("root").innerHTML = html;
+    // const html = await fetch(route).then((data) => data.text());
+    // document.getElementById("root").innerHTML = html;
+
+    if(routes.Main.match(path)){
+        result = MainPage()
+    } 
 };
 
 window.onpopstate = handleLocation;
