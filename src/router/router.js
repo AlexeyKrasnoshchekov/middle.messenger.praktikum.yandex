@@ -1,34 +1,57 @@
+import Handlebars from 'handlebars/runtime';
+
+//pages import
+import SigninPage from '../pages/signin/signin.hbs';
+import LoginPage from '../pages/login/login.hbs';
+import MainPage from '../pages/main/main.hbs';
+import ProfilePage from '../pages/profile/profile.hbs';
+import NotFound from '../pages/404/notFound.hbs';
+
+//partials import
+import Button from '../partials/button.hbs';
+
+//partials registration
+Handlebars.registerPartial('button', Button);
+
 const route = (event) => {
-    event = event || window.event;
-    event.preventDefault();
-    window.history.pushState({}, "", event.target.href);
-    handleLocation();
+  event = event || window.event;
+  event.preventDefault();
+  window.history.pushState({}, '', event.target.href);
+  handleLocation();
 };
 
-const routes = {
-    404: "/src/pages/404/index.html",
-    500: "/src/pages/500/index.html",
-    "/": "/src/pages/main/index.html",
-    "/profile": "/src/pages/profile/index.html",
-    "/login": "/src/pages/login/index.html",
-    "/signin": "/src/pages/signin/index.html"
-};
-
-const routes = {
-    Main: "/"
-};
-
-const handleLocation = async () => {
+document.addEventListener('DOMContentLoaded', () => {
+  const handleLocation = async () => {
     const path = window.location.pathname;
-    const route = routes[path] || routes[404];
-    // const html = await fetch(route).then((data) => data.text());
-    // document.getElementById("root").innerHTML = html;
+    console.log('first', path);
 
-    if(routes.Main.match(path)){
-        result = MainPage()
-    } 
-};
+    const routes = {
+      Main: '/',
+      Profile: '/profile',
+      Login: '/login',
+      Signin: '/signin',
+    };
 
-window.onpopstate = handleLocation;
-handleLocation();
+    if (routes.Main.match(path)) {
+      const html = MainPage();
+      document.getElementById('app').innerHTML = html;
+    } else if (routes.Profile.match(path)) {
+      const html = ProfilePage();
+      document.getElementById('app').innerHTML = html;
+    } else if (routes.Login.match(path)) {
+      const html = LoginPage();
+      document.getElementById('app').innerHTML = html;
+    } else if (routes.Signin.match(path)) {
+      const html = SigninPage();
+      document.getElementById('app').innerHTML = html;
+    } else {
+      const html = NotFound();
+      document.getElementById('app').innerHTML = html;
+    }
+  };
+
+  window.onpopstate = handleLocation;
+  handleLocation();
+});
+
 export default route;

@@ -1,8 +1,8 @@
 import { defineConfig } from "vite";
-import { resolve } from 'path';
 import { ViteAliases } from "vite-aliases";
 import legacy from "@vitejs/plugin-legacy";
-import handlebars from 'vite-plugin-handlebars';
+import handlebarsPrecompile from "./src/utils/vite-plugin-handlebars-precompile";
+
 
 export default defineConfig({
     build: {
@@ -14,12 +14,9 @@ export default defineConfig({
         host: '0.0.0.0',
         hmr: true,
     },
-    assetsInclude: ["**/*.hbs"],
     plugins: [
         ViteAliases(),
-        handlebars({
-            partialDirectory: resolve(__dirname, 'src/partials'),
-          }),
+        handlebarsPrecompile(),
         legacy({
             targets: ['defaults', 'not IE 11'],
         })
