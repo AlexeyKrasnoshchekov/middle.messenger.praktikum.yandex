@@ -27,9 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const routes = {
       Main: '/',
-      Profile: '/profile',
-      Login: '/login',
-      Signin: '/signin',
+      Profile: '/profile/',
+      Login: '/login/',
+      Signin: '/signin/',
     };
 
     if (routes.Main.match(path)) {

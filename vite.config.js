@@ -7,7 +7,7 @@ import handlebarsPrecompile from "./src/utils/vite-plugin-handlebars-precompile"
 export default defineConfig({
     build: {
         target: 'es2017',
-        outDir: 'build',
+        outDir: 'dist',
     },
     server: {
         port: 3000,

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "### Откройте pull request в ветку main из ветки, где вы разрабатывали проект, и добавьте ссылку на этот pr в README.md в ветке main.  ### ВАЖНО: pull request должен называться “Sprint i” (i — номер спринта).",
   "main": "vite.config.js",
+  "engines": {
+    "node": "16.16.0"
+  },
   "dependencies": {
     "@vitejs/plugin-legacy": "^4.0.4",
     "acorn": "^8.8.2",
@@ -107,10 +110,10 @@
     "yallist": "^3.1.1"
   },
   "scripts": {
-    "start": "vite",
-    "build": "cross-env BUILD_TYPE=dev vite build",
+    "dev": "vite",
+    "build": "vite build",
+    "start": "node ./server.cjs ",
     "serve": "vite preview --port 3000",
-    "build-prod": "cross-env BUILD_TYPE=prod vite build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -123,5 +126,8 @@
   "bugs": {
     "url": "https://github.com/AlexeyKrasnoshchekov/middle.messenger.praktikum.yandex/issues"
   },
-  "homepage": "https://github.com/AlexeyKrasnoshchekov/middle.messenger.praktikum.yandex#readme"
+  "homepage": "https://github.com/AlexeyKrasnoshchekov/middle.messenger.praktikum.yandex#readme",
+  "devDependencies": {
+    "express": "^4.18.2"
+  }
 }
