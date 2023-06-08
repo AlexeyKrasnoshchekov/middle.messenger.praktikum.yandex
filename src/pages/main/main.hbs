@@ -1,8 +1,43 @@
-<div>
-     main
-     <nav>
+<div class="page_main">
+     <nav class="page_main_nav">
           <a href="/login" onclick="route()">Login</a>
-          <a href="/signin" onclick="route()">Sigin</a>
+          <a href="/signin" onclick="route()">Signin</a>
           <a href="/profile" onclick="route()">Profile</a>
      </nav>
+     <div class="chat">
+          <aside class="chat_sidebar">
+               <div class="chat_top">
+                    {{> link label="Профиль" class="chat_profile_link" href="/profile"}}
+                    {{> input type="search" name="message" id="chat_search" placeholder="search"}}
+               </div>
+               <div class="chat_items_list">
+                    {{> chatItem}}
+                    {{> chatItem}}
+                    {{> chatItem}}
+                    {{> chatItem}}
+                    {{> chatItem}}
+                    {{> chatItem}}
+                    {{> chatItem}}
+                    {{> chatItem}}
+                    {{> chatItem}}
+               </div>
+          </aside>
+          <section class="chat_place">
+               <div class="chat_place_top">
+                    <div class="chat_user">
+                         {{> avatar}}
+                         <p class="chat_user_name">Вадим</p>
+                    </div>
+                    <span class="chat_menu">1</span>
+               </div>
+               <div class="chat_place_middle"></div>
+               <div class="chat_place_bottom">
+                    <div class="chat_attachment"></div>
+                    <div class="chat_message_input">
+                         {{> input type="text" name="chat_message" id="chat_message" placeholder="message"}}
+                    </div>
+                    <div class="chat_send"></div>
+               </div>
+          </section>
+     </div>
 </div>

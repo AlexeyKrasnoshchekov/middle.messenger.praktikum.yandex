@@ -20,26 +20,17 @@
             "~utils/*": [
                 "src/utils/*"
             ],
-            "~partials/*": [
-                "src/partials/*"
+            "~form/*": [
+                "src/components/form/*"
             ],
-            "~signin/*": [
-                "src/pages/signin/*"
+            "~link/*": [
+                "src/components/link/*"
             ],
-            "~login/*": [
-                "src/pages/login/*"
+            "~assets/*": [
+                "src/assets/*"
             ],
-            "~404/*": [
-                "src/pages/404/*"
-            ],
-            "~500/*": [
-                "src/pages/500/*"
-            ],
-            "~prifile/*": [
-                "src/pages/prifile/*"
-            ],
-            "~profile/*": [
-                "src/pages/profile/*"
+            "~icons/*": [
+                "src/assets/icons/*"
             ]
         }
     }

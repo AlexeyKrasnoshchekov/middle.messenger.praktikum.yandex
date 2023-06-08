@@ -9,6 +9,8 @@ const routes = {
   Profile: '/profile/',
   Login: '/login/',
   Signin: '/signin/',
+  ChangeProfile: '/change_profile/',
+  ChangePassword: '/change_password/'
 };
 
 Object.values(routes).forEach((route) => {

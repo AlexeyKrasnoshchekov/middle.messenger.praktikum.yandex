@@ -1,0 +1,24 @@
+@import '../../styles/variables.less';
+
+
+.button_primary {
+    display: inline-block;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    border-radius: 5px;
+    background: @primary-color;
+    color: @text-color;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: @font;
+    text-align: center;
+    transition: background 250ms ease-in-out, 
+                color 150ms ease;
+}
+
+.button_primary:hover,
+.button_primary:focus {
+    background: @link-color;
+    color: white
+}

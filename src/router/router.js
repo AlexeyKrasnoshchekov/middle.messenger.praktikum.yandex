@@ -1,4 +1,7 @@
 import Handlebars from 'handlebars/runtime';
+import '../styles/index.less';
+
+import '../utils/helpers';
 
 //pages import
 import SigninPage from '../pages/signin/signin.hbs';
@@ -8,10 +11,20 @@ import ProfilePage from '../pages/profile/profile.hbs';
 import NotFound from '../pages/404/notFound.hbs';
 
 //partials import
-import Button from '../partials/button.hbs';
+import Button from '../components/button/button.hbs';
+import Input from '../components/input/input.hbs';
+import ChatItem from '../components/chatItem/chatItem.hbs';
+import Avatar from '../components/avatar/avatar.hbs';
+import Form from '../components/form/form.hbs';
+import Link from '../components/link/link.hbs';
 
 //partials registration
 Handlebars.registerPartial('button', Button);
+Handlebars.registerPartial('input', Input);
+Handlebars.registerPartial('chatItem', ChatItem);
+Handlebars.registerPartial('avatar', Avatar);
+Handlebars.registerPartial('form', Form);
+Handlebars.registerPartial('link', Link);
 
 const route = (event) => {
   event = event || window.event;
@@ -30,6 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
       Profile: '/profile/',
       Login: '/login/',
       Signin: '/signin/',
+      ChangeProfile: '/change_profile/',
+      ChangePassword: '/change_password/'
     };
 
     if (routes.Main.match(path)) {
@@ -40,6 +55,12 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('app').innerHTML = html;
     } else if (routes.Login.match(path)) {
       const html = LoginPage();
+      document.getElementById('app').innerHTML = html;
+    } else if (routes.ChangeProfile.match(path)) {
+      const html = ChangeProfilePage();
+      document.getElementById('app').innerHTML = html;
+    } else if (routes.ChangePassword.match(path)) {
+      const html = ChangePasswordPage();
       document.getElementById('app').innerHTML = html;
     } else if (routes.Signin.match(path)) {
       const html = SigninPage();

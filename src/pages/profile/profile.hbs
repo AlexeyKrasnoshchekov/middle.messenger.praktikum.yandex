@@ -1,3 +1,36 @@
-<div>
-     profile
+<div class="page_profile">
+     <div class="page_profile_back">
+          {{> button label="Зарегистрироваться" type="submit"}}
+     </div>
+     <div class="page_profile_view">
+          {{> avatar}}
+          <p class="profile_user_name">Вадим</p>
+          <div class="page_profile_data">
+               <span>Почта</span>
+               <span>pochta@yandex.ru</span>
+          </div>
+          <div class="page_profile_data">
+               <span>Логин</span>
+               <span>ivanov</span>
+          </div>
+          <div class="page_profile_data">
+               <span>Имя</span>
+               <span>Иван</span>
+          </div>
+          <div class="page_profile_data">
+               <span>Фамилия</span>
+               <span>Иванов</span>
+          </div>
+          <div class="page_profile_data">
+               <span>Имя в чате</span>
+               <span>Иван</span>
+          </div>
+          <div class="page_profile_data">
+               <span>Телефон</span>
+               <span>+7 (928) 777 66 55</span>
+          </div>
+          <p class="page_profile_link">{{> link label="Изменить данные" href="/change_profile"}}</p>
+          <p class="page_profile_link">{{> link label="Изменить пароль" href="/change_password"}}</p>       
+          <p class="page_profile_link">{{> link label="Выйти" href="/login"}}</p>         
+     </div>
 </div>
