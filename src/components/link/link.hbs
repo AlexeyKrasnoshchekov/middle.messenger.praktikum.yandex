@@ -1,1 +1,5 @@
-<a href="{{href}}" class="link">{{label}}</a>
+{{#if isIcon}}
+  <a href="{{href}}" class="back"><i class="icon fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+  {{else}}
+  <a href="{{href}}" class="link">{{label}}</a>
+{{/if}}

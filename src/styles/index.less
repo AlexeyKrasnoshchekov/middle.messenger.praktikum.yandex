@@ -6,6 +6,8 @@
 @import '../pages/signin/signin.less';
 @import '../pages/main/main.less';
 @import '../pages/profile/profile.less';
+@import '../pages/404/notFound.less';
+@import '../pages/500/500.less';
 
 //partials styles import
 @import '../components/avatar/avatar.less';
@@ -14,6 +16,7 @@
 @import '../components/form/form.less';
 @import '../components/input/input.less';
 @import '../components/link/link.less';
+@import '../components/profile_form/profile_form.less';
 
 * {
     box-sizing: border-box;
@@ -27,4 +30,12 @@ body {
     padding: 0;
     margin: 0;
     font-family: @font;
+}
+
+
+.hide {
+    display: none;
+}
+.show {
+    display: flex;
 }

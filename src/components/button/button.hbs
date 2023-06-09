@@ -1,1 +1,11 @@
-<button class="button_primary">{{label}}</button>
+{{#if isFormButton}}
+  <button class="button_form">{{label}}</button>
+{{else if isAttachButton}}
+  <button class="button_attach"><i class="icon fa fa-paperclip" aria-hidden="true"></i></button>
+{{else if isSendButton}}
+  <button class="button_send"><i class="icon fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+{{else if isBackButton}}
+  <button class="button_back">{{> link label="link" href="/" isIcon=true}}</button>
+{{else if isMenuButton}}
+  <button class="button_menu"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+{{/if}}

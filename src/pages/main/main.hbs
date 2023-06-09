@@ -1,4 +1,4 @@
-<div class="page_main">
+<main class="page_main">
      <nav class="page_main_nav">
           <a href="/login" onclick="route()">Login</a>
           <a href="/signin" onclick="route()">Signin</a>
@@ -8,7 +8,7 @@
           <aside class="chat_sidebar">
                <div class="chat_top">
                     {{> link label="Профиль" class="chat_profile_link" href="/profile"}}
-                    {{> input type="search" name="message" id="chat_search" placeholder="search"}}
+                    {{> input type="search" name="message" id="chat_search" placeholder="search" isSearchInput=true}}
                </div>
                <div class="chat_items_list">
                     {{> chatItem}}
@@ -28,16 +28,25 @@
                          {{> avatar}}
                          <p class="chat_user_name">Вадим</p>
                     </div>
-                    <span class="chat_menu">1</span>
+                    <span class="chat_menu">{{> button isMenuButton=true}}</span>
                </div>
                <div class="chat_place_middle"></div>
                <div class="chat_place_bottom">
-                    <div class="chat_attachment"></div>
-                    <div class="chat_message_input">
-                         {{> input type="text" name="chat_message" id="chat_message" placeholder="message"}}
+                    <div class="chat_attachment">
+                         {{> button isAttachButton=true}}
+                         <div class="chat_attachment_choice">
+                              <div class="chat_attachment_type"><span><i class="fa fa-file-image" aria-hidden="true"></i></span><span>Фото или Видео</span></div>
+                              <div class="chat_attachment_type"><span><i class="fa fa-file" aria-hidden="true"></i></span><span>Файл</span></div>
+                              <div class="chat_attachment_type"><span><i class="fa fa-location-arrow" aria-hidden="true"></i></span><span>Локация</span></div>
+                         </div>
                     </div>
-                    <div class="chat_send"></div>
+                    <div class="chat_message_input">
+                         {{> input type="text" name="message" id="chat_message" placeholder="message" isMessageInput=true}}
+                    </div>
+                    <div class="chat_send">
+                         {{> button isSendButton=true}}
+                    </div>
                </div>
           </section>
      </div>
-</div>
+</main>

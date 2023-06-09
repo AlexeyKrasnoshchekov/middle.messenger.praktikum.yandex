@@ -20,17 +20,8 @@
             "~utils/*": [
                 "src/utils/*"
             ],
-            "~form/*": [
-                "src/components/form/*"
-            ],
-            "~link/*": [
-                "src/components/link/*"
-            ],
             "~assets/*": [
                 "src/assets/*"
-            ],
-            "~icons/*": [
-                "src/assets/icons/*"
             ]
         }
     }
