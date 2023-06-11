@@ -4,6 +4,9 @@ MiddleChat
 <b>ССЫЛКА НА NETLIFY:</b><br>
 https://sage-cajeta-9a9082.netlify.app/
 
+<b>ССЫЛКА НА МАКЕТ:</b><br>
+https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?type=design&t=SuvxV7IGsU98lPxB-0
+
 <b>ПИСАНИЕ:</b><br>
 Приложение позволяет общаться с друзьями и коллегами в режиме онлайн, создавать коллективные чаты, обмениваться файлами.
 
