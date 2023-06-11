@@ -7,7 +7,3 @@ Handlebars.registerHelper('if', function (conditional, options) {
     return options.inverse(this);
   }
 });
-
-
-
-
