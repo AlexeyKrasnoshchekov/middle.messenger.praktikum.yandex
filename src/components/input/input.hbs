@@ -6,4 +6,6 @@
   <input type={{type}} id="{{id}}" name="{{name}}" required={{required}} placeholder="message..." class="message_input" />
 {{else if isProfileInput}}
   <input type={{type}} id="{{id}}" name="{{name}}" required={{required}} placeholder="{{placeholder}}" class="message_input" />
+{{else if isFileInput}}
+  <input type={{type}} id="{{id}}" name="{{name}}" required={{required}} placeholder="{{placeholder}}" class="file_input" />
 {{/if}}

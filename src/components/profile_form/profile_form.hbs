@@ -30,45 +30,45 @@
   </div>
 {{else if isProfileChange}}
   <form class="profile">
-          <div class="page_profile_data">
-               <span>Почта</span>
-               <span>pochta@yandex.ru</span>
-          </div>
-          <div class="page_profile_data">
-               <span>Логин</span>
-               <span>ivanov</span>
-          </div>
-          <div class="page_profile_data">
-               <span>Имя</span>
-               <span>Иван</span>
-          </div>
-          <div class="page_profile_data">
-               <span>Фамилия</span>
-               <span>Иванов</span>
-          </div>
-          <div class="page_profile_data">
-               <span>Имя в чате</span>
-               <span>Иван</span>
-          </div>
-          <div class="page_profile_data">
-              <span>Телефон</span>
-              <span>+7 (928) 777 66 55</span>
-          </div>
-          {{> button label="Сохранить" type="submit" isFormButton=true}}
+    <div class="page_profile_data">
+      <label for="email">Почта</label>
+      {{> input type="email" name="email" id="email" placeholder="enter email" required=false isFormInput=true}}
+    </div>
+    <div class="page_profile_data">
+      <label for="login">Логин</label>
+      {{> input type="text" name="login" id="login" placeholder="enter login" required=false isFormInput=true}}
+    </div>
+    <div class="page_profile_data">
+      <label for="first_name">Имя</label>
+      {{> input type="text" name="first_name" id="first_name" placeholder="enter first name" required=false isFormInput=true}}
+    </div>
+    <div class="page_profile_data">
+      <label for="last_name">Фамилия</label>
+      {{> input type="text" name="second_name" id="second_name" placeholder="enter last name" required=false isFormInput=true}}
+    </div>
+    <div class="page_profile_data">
+      <label for="login">Имя в чате</label>
+      {{> input type="text" name="chat_name" id="chat_name" placeholder="enter chat name" required=false isFormInput=true}}
+    </div>
+    <div class="page_profile_data">
+      <label for="tel">Телефон</label>
+      {{> input type="tel" name="phone" id="phone" placeholder="+7 (900) 111 22 33" required=false isFormInput=true}}
+    </div>
+    {{> button label="Сохранить" type="submit" isFormButton=true}}
   </form>
 {{else if isProfilePassword}}
   <form class="profile">
           <div class="page_profile_data">
-               <span>Старый пароль</span>
-               <span>pochta@yandex.ru</span>
+            <label for="old_password">Старый пароль</label>
+            {{> input type="password" name="oldPassword" id="old_password" placeholder="enter old password" required=true isFormInput=true}}
           </div>
           <div class="page_profile_data">
-               <span>Новый пароль</span>
-               <span>ivanov</span>
+            <label for="newPassword">Новый пароль</label>
+            {{> input type="password" name="newPassword" id="new_password" placeholder="enter new password" required=true isFormInput=true}}
           </div>
           <div class="page_profile_data">
-               <span>Повторите новый пароль</span>
-               <span>Иван</span>
+            <label for="new_password_repeat">Новый пароль</label>
+            {{> input type="password" name="newPassword" id="new_password_repeat" placeholder="enter new password again" required=true isFormInput=true}}
           </div>
           {{> button label="Сохранить" type="submit" isFormButton=true}}
   </form>

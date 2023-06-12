@@ -13,6 +13,7 @@ import ProfilePage from '../pages/profile/profile.hbs';
 import ProfileChange from '../pages/profile/profile_change.hbs';
 import ProfilePassword from '../pages/profile/profile_password.hbs';
 import NotFound from '../pages/404/notFound.hbs';
+import Error500 from '../pages/500/500.hbs';
 
 //partials import
 import Button from '../components/button/button.hbs';
@@ -49,7 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
       Login: '/login/',
       Signin: '/signin/',
       ChangeProfile: '/change_profile/',
-      ChangePassword: '/change_password/'
+      ChangePassword: '/change_password/',
+      Error500: '/error_500/',
     };
 
     if (routes.Main.match(path)) {
@@ -70,6 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('app').innerHTML = html;
     } else if (routes.Signin.match(path)) {
       const html = SigninPage();
+      document.getElementById('app').innerHTML = html;
+    } else if (routes.Error500.match(path)) {
+      const html = Error500();
       document.getElementById('app').innerHTML = html;
     } else {
       const html = NotFound();
