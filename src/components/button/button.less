@@ -1,0 +1,45 @@
+@import '../../styles/variables.less';
+
+
+.button_form {
+    display: inline-block;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    background: @primary-color;
+    color: @text-color;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: @font;
+    text-align: center;
+    transition: background 250ms ease-in-out, 
+                color 150ms ease;
+}
+
+.button_form:hover,
+.button_form:focus {
+    background: @link-color;
+    color: white
+}
+
+.button_attach,.button_send,.button_menu,.button_back {
+    border: 0;
+    padding: 0;
+    background-color: transparent;
+    color: @text-color;
+
+    &:hover {
+        cursor: pointer;
+        color: @text-color-hover;
+    }
+    
+    .icon {
+        width: 30px;
+        height: 30px;
+        background-color: transparent;
+    }
+
+
+}
