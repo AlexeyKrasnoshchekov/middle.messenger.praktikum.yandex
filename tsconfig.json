@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "moduleResolution": "Node",
+    "strict": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "noEmit": true,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "sourceMap": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "paths": {
+      "~components/*": [
+        "src/components/*"
+      ],
+      "~pages/*": [
+        "src/pages/*"
+      ],
+      "~router/*": [
+        "src/router/*"
+      ],
+      "~styles/*": [
+        "src/styles/*"
+      ],
+      "~types/*": [
+        "src/types/*"
+      ],
+      "~utils/*": [
+        "src/utils/*"
+      ],
+      "~/*": [
+        "src/*"
+      ]
+    }
+  },
+  "include": [
+    "src"
+  ]
+}
