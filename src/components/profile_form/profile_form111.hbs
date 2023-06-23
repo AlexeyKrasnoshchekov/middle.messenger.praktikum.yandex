@@ -1,0 +1,48 @@
+{{#if isProfile}}
+          <div class="page_profile_data">
+               <span>Почта</span>
+               <span>pochta@yandex.ru</span>
+          </div>
+          <div class="page_profile_data">
+               <span>Логин</span>
+               <span>ivanov</span>
+          </div>
+          <div class="page_profile_data">
+               <span>Имя</span>
+               <span>Иван</span>
+          </div>
+          <div class="page_profile_data">
+               <span>Фамилия</span>
+               <span>Иванов</span>
+          </div>
+          <div class="page_profile_data">
+               <span>Имя в чате</span>
+               <span>Иван</span>
+          </div>
+      <div class="page_profile_data">
+        <span>Телефон</span>
+      <span>+7 (928) 777 66 55</span>
+    </div>
+    {{{link1}}}       
+    {{{link2}}}       
+    {{{link3}}}     
+{{else if isProfileChange}}
+  <p>111</p>
+{{else if isProfilePassword}}
+  <form class="profile">
+          <div class="page_profile_data">
+            <label for="old_password">Старый пароль</label>
+            {{> input type="password" name="oldPassword" id="old_password" placeholder="enter old password" required=true isFormInput=true}}
+          </div>
+          <div class="page_profile_data">
+            <label for="newPassword">Новый пароль</label>
+            {{> input type="password" name="newPassword" id="new_password" placeholder="enter new password" required=true isFormInput=true}}
+          </div>
+          <div class="page_profile_data">
+            <label for="new_password_repeat">Новый пароль</label>
+            {{> input type="password" name="newPassword" id="new_password_repeat" placeholder="enter new password again" required=true isFormInput=true}}
+          </div>
+          {{> button label="Сохранить" type="submit" isFormButton=true}}
+  </form>
+
+{{/if}}

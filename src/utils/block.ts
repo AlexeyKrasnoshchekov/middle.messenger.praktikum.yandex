@@ -110,7 +110,10 @@ class Block<P extends Record<string, any> = any> {
   }
 
   private _componentDidUpdate(oldProps, newProps) {
+    console.log('oldProps',oldProps);
+    console.log('newProps',newProps);
     if (this.componentDidUpdate(oldProps, newProps)) {
+      console.log('CDU');
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
@@ -118,15 +121,17 @@ class Block<P extends Record<string, any> = any> {
   // Может переопределять пользователь, необязательно трогать
   // eslint-disable-next-line class-methods-use-this
   protected componentDidUpdate(oldProps, newProps) {
-    return oldProps.text !== newProps.text;
+    
+    return oldProps.form_type !== newProps.form_type;
   }
 
   setProps = (nextProps) => {
     if (!nextProps) {
       return;
     }
-
+    console.log('nextProps111',nextProps);
     Object.assign(this.props, nextProps);
+    console.log('nextProps',this.props);
   };
 
   get element() {
@@ -135,7 +140,10 @@ class Block<P extends Record<string, any> = any> {
 
   private _render() {
     const block = this.render();
-    this._element!.innerHtml = '';
+    const newElement = block.firstElementChild as HTMLElement;
+    if (this._element && newElement) {
+      this._element.replaceWith(newElement);
+    }
     this._element!.append(block);
 
     this._addEvents();
@@ -194,12 +202,13 @@ class Block<P extends Record<string, any> = any> {
       set(target, prop, value) {
         const oldTarget = { ...target };
 
+        
+
         // eslint-disable-next-line no-param-reassign
         target[prop] = value;
 
         // Запускаем обновление компоненты
         // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
-
         self.eventBus().emit(Block.EVENTS.FLOW_CDU, oldTarget, target);
         return true;
       },

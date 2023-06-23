@@ -46,37 +46,32 @@ const handleLocation = async () => {
     Error500: '/error_500/',
   };
 
-  if (routes.Login.match(path)) {
+  if (routes.Main.match(path)) {
+    const html = MainPage();
+    document.getElementById('app').innerHTML = html;
+    toggleAttachMenu();
+  } else if (routes.Profile.match(path)) {
+    const html = ProfilePage();
+    document.getElementById('app').innerHTML = html;
+  } else if (routes.Login.match(path)) {
     const html = LoginPage();
     document.getElementById('app').innerHTML = html;
+  } else if (routes.ChangeProfile.match(path)) {
+    const html = ProfileChange();
+    document.getElementById('app').innerHTML = html;
+  } else if (routes.ChangePassword.match(path)) {
+    const html = ProfilePassword();
+    document.getElementById('app').innerHTML = html;
+  } else if (routes.Signin.match(path)) {
+    const html = SigninPage();
+    document.getElementById('app').innerHTML = html;
+  } else if (routes.Error500.match(path)) {
+    const html = Error500();
+    document.getElementById('app').innerHTML = html;
+  } else {
+    const html = NotFound();
+    document.getElementById('app').innerHTML = html;
   }
-
-  // if (routes.Main.match(path)) {
-  //   const html = MainPage();
-  //   document.getElementById('app').innerHTML = html;
-  //   toggleAttachMenu();
-  // } else if (routes.Profile.match(path)) {
-  //   const html = ProfilePage();
-  //   document.getElementById('app').innerHTML = html;
-  // } else if (routes.Login.match(path)) {
-  //   const html = LoginPage();
-  //   document.getElementById('app').innerHTML = html;
-  // } else if (routes.ChangeProfile.match(path)) {
-  //   const html = ProfileChange();
-  //   document.getElementById('app').innerHTML = html;
-  // } else if (routes.ChangePassword.match(path)) {
-  //   const html = ProfilePassword();
-  //   document.getElementById('app').innerHTML = html;
-  // } else if (routes.Signin.match(path)) {
-  //   const html = SigninPage();
-  //   document.getElementById('app').innerHTML = html;
-  // } else if (routes.Error500.match(path)) {
-  //   const html = Error500();
-  //   document.getElementById('app').innerHTML = html;
-  // } else {
-  //   const html = NotFound();
-  //   document.getElementById('app').innerHTML = html;
-  // }
 };
 
 window.onpopstate = handleLocation;

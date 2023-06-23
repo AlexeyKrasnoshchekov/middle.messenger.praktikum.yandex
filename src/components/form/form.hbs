@@ -1,4 +1,21 @@
-<div>
-    <h3>form</h3>
+{{#if isLoginForm}}
+    <h2 class="form_title">Войти</h2>
+    <fieldset class="form_fieldset">
+        <label for="email">Логин</label>
+        {{{input}}}
+    </fieldset>
+    
     {{{button}}}
-</div>
+    {{{link}}}
+
+{{else if isSigninForm}}
+  <h2 class="form_title">Регистрация</h2>
+  <fieldset class="form_fieldset">
+    <label for="email">Логин</label>
+        {{{input}}}
+    </fieldset>
+    
+    {{{button}}}
+    {{{link}}}
+
+{{/if}}

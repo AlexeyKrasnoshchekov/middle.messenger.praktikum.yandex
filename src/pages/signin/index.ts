@@ -1,16 +1,16 @@
-import template from './login.hbs';
+import template from './signin.hbs';
 import Block from '../../utils/block';
 import Form from '../../components/form';
 
-class LoginPage extends Block {
+class SigninPage extends Block {
   constructor() {
     super('main');
-    this.element.classList.add('page_login');
+    this.element.classList.add('page_signin');
   }
 
   init () {
     this.children.form = new Form({
-        view: 'login'
+        view: 'signin'
     });
   }
 
@@ -20,4 +20,4 @@ class LoginPage extends Block {
   }
 }
 
-export default LoginPage;
+export default SigninPage;

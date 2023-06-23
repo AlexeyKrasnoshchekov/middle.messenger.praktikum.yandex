@@ -1,11 +1,1 @@
-{{#if isFormInput}}
-  <input type={{type}} id="{{id}}" name="{{name}}" required={{required}} placeholder="{{placeholder}}" class="form_input" />
-{{else if isSearchInput}}
-  <input type={{type}} id="{{id}}" name="{{name}}" required={{required}} placeholder="{{placeholder}}" class="search_input" />
-{{else if isMessageInput}}
-  <input type={{type}} id="{{id}}" name="{{name}}" required={{required}} placeholder="message..." class="message_input" />
-{{else if isProfileInput}}
-  <input type={{type}} id="{{id}}" name="{{name}}" required={{required}} placeholder="{{placeholder}}" class="message_input" />
-{{else if isFileInput}}
-  <input type={{type}} id="{{id}}" name="{{name}}" required={{required}} placeholder="{{placeholder}}" class="file_input" />
-{{/if}}
+<input type={{type}} id="{{id}}" name="{{name}}" required={{required}} placeholder="{{placeholder}}" class="{{class}}" />

@@ -1,10 +1,10 @@
-
+<main class="page_profile">
      <div class="page_profile_back">
-          {{{button}}}
+          {{> button isBackButton=true}}
      </div>
      <div class="page_profile_view">
-          {{{avatar}}}
+          {{> avatar}}
           <p class="profile_user_name">Вадим</p>
-          <div id="profile_form"></div>       
+          {{> profile_form isProfile=true}}        
      </div>
-
+</main>
