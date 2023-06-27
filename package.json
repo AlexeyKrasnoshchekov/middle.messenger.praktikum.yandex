@@ -110,8 +110,9 @@
   },
   "scripts": {
     "dev": "vite --open",
+    "lint": "stylelint \"**/*.less\" && eslint src && npm run prebuild",
     "prebuild": "tsc --noEmit",
-    "build": "npm run prebuild && vite build",
+    "build": "npm run lint && vite build",
     "start": "vite build && node ./server.cjs",
     "serve": "vite preview --port 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
