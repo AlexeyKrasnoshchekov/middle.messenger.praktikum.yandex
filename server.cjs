@@ -9,14 +9,14 @@ const routes = {
   Profile: '/profile/',
   Login: '/login/',
   Signin: '/signin/',
-  ChangeProfile: '/change_profile/',
-  ChangePassword: '/change_password/'
+  ChangeProfile: '/profile_change/',
+  ChangePassword: '/profile_password/',
 };
 
 Object.values(routes).forEach((route) => {
   app.use(route, express.static(`${__dirname}/dist`));
-})
+});
 
-app.listen(PORT, function () {
+app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
-}); 
+});

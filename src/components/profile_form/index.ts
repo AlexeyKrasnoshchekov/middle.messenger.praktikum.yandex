@@ -24,7 +24,7 @@ class ProfileForm extends Block {
   init() {
     if (this.props.view === 'profile') {
       this.children.link1 = new Link({
-        href: 'profile_change',
+        href: '/profile_change',
         label: 'Изменить данные',
         // events: {
         //   click: (e:any) => {
@@ -35,7 +35,7 @@ class ProfileForm extends Block {
         // },
       });
       this.children.link2 = new Link({
-        href: 'profile_password',
+        href: '/profile_password',
         label: 'Изменить пароль',
         // events: {
         //   click: (e:any) => {
