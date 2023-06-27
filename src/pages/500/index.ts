@@ -4,7 +4,7 @@ import Link from '../../components/link/index';
 
 class Error500Page extends Block {
   constructor() {
-    super('main',{});
+    super('main', {});
     this.getContent()?.classList.add('page_not_found');
   }
 

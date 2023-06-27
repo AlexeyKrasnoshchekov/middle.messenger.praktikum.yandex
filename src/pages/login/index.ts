@@ -5,7 +5,7 @@ import { TestLogin, TestPassword } from '../../utils/ui';
 
 class LoginPage extends Block {
   constructor() {
-    super('main',{});
+    super('main', {});
     this.getContent()?.classList.add('page_login');
   }
 

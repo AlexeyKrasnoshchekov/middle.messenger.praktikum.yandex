@@ -7,7 +7,7 @@ import Input from '../../components/input/index';
 
 class MainPage extends Block {
   constructor() {
-    super('main',{});
+    super('main', {});
     this.element!.classList.add('page_main');
   }
 
