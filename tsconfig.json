@@ -10,6 +10,7 @@
         "strict": true,
         "skipLibCheck": true,
         "noImplicitAny": true,
+        "noUnusedLocals": true,
         "lib": [
             "ESNext",
             "DOM"
