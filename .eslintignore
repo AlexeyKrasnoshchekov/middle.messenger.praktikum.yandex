@@ -1,5 +1,4 @@
 /build
-/src
 **/*.min.js
 **/*.d.ts
 /node_modules 

@@ -1,15 +1,11 @@
-#profile_form {
+.profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     width: 100%;
 
-    .profile {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        width: 100%;
-    }
-
-    fragment {
+    .linkWrapper {
         width: 40%;
         text-align: left;
         margin: 0;
@@ -36,9 +32,18 @@
     }
 
     &:last-of-type{
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
     }
 
 }
+
+.page_profile_link {
+    width: 40%;
+    text-align: left;
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+
 
 

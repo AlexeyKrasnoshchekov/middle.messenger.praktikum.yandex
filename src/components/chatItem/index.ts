@@ -1,4 +1,4 @@
-import Avatar from '~components/avatar';
+import Avatar from '../avatar/index';
 import Block from '../../utils/block';
 import template from './chatItem.hbs';
 
@@ -15,7 +15,6 @@ interface ChatItemProps {
 
 class ChatItem extends Block {
   constructor(props: ChatItemProps) {
-    console.log('props', props);
     super('div', props);
     this.element!.classList.add('chat_item');
   }
@@ -24,17 +23,17 @@ class ChatItem extends Block {
     this.children.avatar = new Avatar({
       class: 'avatar',
       alt: 'аватар пользователя',
-      src: ''
+      src: '',
     });
   }
 
   render() {
-    return this.compile(template, { 
-        src: this.props.src,
-        sender: this.props.sender,
-        text: this.props.text,
-        time: this.props.time,
-        unread: this.props.unread,
+    return this.compile(template, {
+      src: this.props.src,
+      sender: this.props.sender,
+      text: this.props.text,
+      time: this.props.time,
+      unread: this.props.unread,
     });
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 import { TemplateDelegate } from 'handlebars';
 import { nanoid } from 'nanoid';
@@ -17,11 +18,11 @@ class Block<P extends Record<string, any> = any> {
 
   protected props: P;
 
-  protected children:Record<string, Block>;
+  protected children:Record<string, Block | Block[]>;
 
-  _element = null;
+  private _element: HTMLElement | null = null;
 
-  _meta = null;
+  private _meta:{ tagName: string; props: P; };
 
   //   /** JSDoc
   //        * @param {string} tagName
@@ -30,7 +31,7 @@ class Block<P extends Record<string, any> = any> {
   //        * @returns {void}
   //        */
 
-  constructor(tagName, propsWithChildren:any = {}) {
+  constructor(tagName:string, propsWithChildren:P) {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
@@ -50,9 +51,10 @@ class Block<P extends Record<string, any> = any> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  _getChildrenAndProps(childrenAndProps: any) {
-    const props:Record<string, any> = {};
-    const children:Record<string, Block> = {};
+  _getChildrenAndProps(childrenAndProps: P)
+    :{ props: P, children: Record<string, Block | Block[]> } {
+    const props:Record<string, unknown> = {};
+    const children:Record<string, Block | Block[]> = {};
 
     Object.entries(childrenAndProps).forEach(([key, value]) => {
       if (value instanceof Block) {
@@ -62,10 +64,10 @@ class Block<P extends Record<string, any> = any> {
       }
     });
 
-    return { props, children };
+    return { props: props as P, children };
   }
 
-  _registerEvents(eventBus) {
+  _registerEvents(eventBus:EventBus) {
     eventBus.on(Block.EVENTS.INIT, this._init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -73,9 +75,9 @@ class Block<P extends Record<string, any> = any> {
   }
 
   _addEvents() {
-    const {events = {}} = this.props as P & { events: Record<string, () => void> };
+    const { events = {} } = this.props as P & { events: Record<string, () => void> };
 
-    Object.keys(events).forEach(eventName => {
+    Object.keys(events).forEach((eventName) => {
       this._element?.addEventListener(eventName, events[eventName]);
     });
   }
@@ -93,8 +95,9 @@ class Block<P extends Record<string, any> = any> {
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   protected init() {
-    
+
   }
 
   private _componentDidMount() {
@@ -109,29 +112,24 @@ class Block<P extends Record<string, any> = any> {
     this.eventBus().emit(Block.EVENTS.FLOW_CDM);
   }
 
-  private _componentDidUpdate(oldProps, newProps) {
-    console.log('oldProps',oldProps);
-    console.log('newProps',newProps);
+  private _componentDidUpdate(oldProps:P, newProps:P) {
     if (this.componentDidUpdate(oldProps, newProps)) {
-      console.log('CDU');
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
   }
 
   // Может переопределять пользователь, необязательно трогать
   // eslint-disable-next-line class-methods-use-this
-  protected componentDidUpdate(oldProps, newProps) {
-    
-    return oldProps.form_type !== newProps.form_type;
+  protected componentDidUpdate(oldProps:P, newProps:P) {
+    return oldProps !== newProps;
   }
 
-  setProps = (nextProps) => {
+  setProps = (nextProps:P) => {
     if (!nextProps) {
       return;
     }
-    console.log('nextProps111',nextProps);
+
     Object.assign(this.props, nextProps);
-    console.log('nextProps',this.props);
   };
 
   get element() {
@@ -172,15 +170,26 @@ class Block<P extends Record<string, any> = any> {
 
     temp.innerHTML = html;
 
+    const replaceStub = (component: Block) => {
+      const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
+
+      if (!stub) {
+        return;
+      }
+
+      component.getContent()?.append(...Array.from(stub.childNodes));
+
+      stub.replaceWith(component.getContent()!);
+    };
+
+    // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     Object.entries(this.children).forEach(([_, component]) => {
-        const stub = temp.content.querySelector(`[data-id="${component.id}"]`);
-
-        if (!stub) {
-            return;
-        }
-
-        stub.replaceWith(component.getContent()!);
-      });
+      if (Array.isArray(component)) {
+        component.forEach(replaceStub);
+      } else {
+        replaceStub(component);
+      }
+    });
 
     return temp.content;
   }
@@ -189,23 +198,21 @@ class Block<P extends Record<string, any> = any> {
     return this.element;
   }
 
-  _makePropsProxy(props) {
+  _makePropsProxy(props:P) {
     // Можно и так передать this
     // Такой способ больше не применяется с приходом ES6+
     const self = this;
 
     return new Proxy(props, {
-      get(target, prop) {
+      get(target, prop:string) {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
-      set(target, prop, value) {
+      set(target, prop:string, value) {
         const oldTarget = { ...target };
 
-        
-
         // eslint-disable-next-line no-param-reassign
-        target[prop] = value;
+        target[prop as keyof P] = value;
 
         // Запускаем обновление компоненты
         // Плохой cloneDeep, в следующей итерации нужно заставлять добавлять cloneDeep им самим
@@ -219,17 +226,9 @@ class Block<P extends Record<string, any> = any> {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  _createDocumentElement(tagName) {
+  _createDocumentElement(tagName:string) {
     // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
-  }
-
-  show() {
-    this.getContent().style.display = 'block';
-  }
-
-  hide() {
-    this.getContent().style.display = 'none';
   }
 }
 

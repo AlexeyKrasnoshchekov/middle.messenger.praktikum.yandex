@@ -4,6 +4,8 @@ import { toggleAttachMenu } from './src/utils/ui';
 import LoginPage from './src/pages/login/index';
 import SigninPage from './src/pages/signin/index';
 import ProfilePage from './src/pages/profile/index';
+import ProfileChangePage from './src/pages/profile_change/index';
+import ProfilePasswordPage from './src/pages/profile_password/index';
 import MainPage from './src/pages/main/index';
 import Error500Page from './src/pages/500/index';
 import NotFoundPage from './src/pages/404/index';
@@ -14,7 +16,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const loginPage = new LoginPage();
   const signinPage = new SigninPage();
-  const profilePage = new ProfilePage();
+  const profilePage = new ProfilePage({ firstName: 'Виктор' });
+  const profileChangePage = new ProfileChangePage({ firstName: 'Виктор' });
+  const profilePasswordChangePage = new ProfilePasswordPage({ firstName: 'Виктор' });
   const mainPage = new MainPage();
   const error500Page = new Error500Page();
   const notFoundPage = new NotFoundPage();
@@ -24,8 +28,8 @@ window.addEventListener('DOMContentLoaded', () => {
     Profile: '/profile/',
     Login: '/login/',
     Signin: '/signin/',
-    ChangeProfile: '/change_profile/',
-    ChangePassword: '/change_password/',
+    ChangeProfile: '/profile_change/',
+    ChangePassword: '/profile_password/',
     Error500: '/error_500/',
   };
 
@@ -38,7 +42,11 @@ window.addEventListener('DOMContentLoaded', () => {
     root?.append(signinPage.getContent()!);
   } else if (routes.Profile.match(path)) {
     root?.append(profilePage.getContent()!);
-    profilePage.dispatchComponentDidMount();
+    // profilePage.dispatchComponentDidMount();
+  } else if (routes.ChangeProfile.match(path)) {
+    root?.append(profileChangePage.getContent()!);
+  } else if (routes.ChangePassword.match(path)) {
+    root?.append(profilePasswordChangePage.getContent()!);
   } else if (routes.Error500.match(path)) {
     root?.append(error500Page.getContent()!);
   } else {

@@ -1,35 +1,34 @@
 {{#if isProfile}}
           <div class="page_profile_data">
                <span>Почта</span>
-               <span>pochta@yandex.ru</span>
+               <span>{{email}}</span>
           </div>
           <div class="page_profile_data">
                <span>Логин</span>
-               <span>ivanov</span>
+               <span>{{login}}</span>
           </div>
           <div class="page_profile_data">
                <span>Имя</span>
-               <span>Иван</span>
+               <span>{{firstName}}</span>
           </div>
           <div class="page_profile_data">
                <span>Фамилия</span>
-               <span>Иванов</span>
+               <span>{{lastName}}</span>
           </div>
           <div class="page_profile_data">
                <span>Имя в чате</span>
-               <span>Иван</span>
+               <span>{{chatName}}</span>
           </div>
-      <div class="page_profile_data">
-        <span>Телефон</span>
-      <span>+7 (928) 777 66 55</span>
-    </div>
-    {{{link1}}}       
-    {{{link2}}}       
-    {{{link3}}}       
+          <div class="page_profile_data">
+            <span>Телефон</span>
+            <span>{{phone}}</span>
+          </div>
+          {{{link1}}}       
+          {{{link2}}}       
+          {{{link3}}}       
 {{else if isProfileChange}}
-  <p>1111</p>
-  {{{input}}}
+  {{{form}}}
 {{else if isProfilePassword}}
-  <p>2222</p>
+  {{{form}}}
 
 {{/if}}

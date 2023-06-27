@@ -1,17 +1,17 @@
 import template from './notFound.hbs';
 import Block from '../../utils/block';
-import Link from '~components/link';
+import Link from '../../components/link/index';
 
 class NotFoundPage extends Block {
   constructor() {
-    super('main');
-    this.element.classList.add('page_not_found');
+    super('main',{});
+    this.getContent()?.classList.add('page_not_found');
   }
 
-  init () {
+  init() {
     this.children.link = new Link({
       href: '/',
-      label: 'Назад к чатам'
+      label: 'Назад к чатам',
     });
   }
 

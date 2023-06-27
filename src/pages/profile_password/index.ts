@@ -1,15 +1,15 @@
-import template from './profile.hbs';
+import template from './profile_password.hbs';
 import Block from '../../utils/block';
 import Button from '../../components/button';
 import Avatar from '../../components/avatar';
 import ProfileForm from '../../components/profile_form';
 
-interface ProfilePageProps {
+interface ProfilePasswordPageProps {
   firstName: string
 }
 
-class ProfilePage extends Block {
-  constructor(props:ProfilePageProps) {
+class ProfilePasswordPage extends Block {
+  constructor(props:ProfilePasswordPageProps) {
     super('main', props);
     this.element!.classList.add('page_profile');
   }
@@ -24,19 +24,16 @@ class ProfilePage extends Block {
         },
       },
     });
+
     this.children.avatar = new Avatar({
       class: 'avatar',
       alt: 'аватар пользователя',
       src: '',
     });
+
     this.children.profileForm = new ProfileForm({
-      view: 'profile',
-      email: 'example@gmail.com',
-      login: 'Viktor',
+      view: 'profile_password',
       firstName: this.props.firstName,
-      lastName: 'Петров',
-      chatName: 'Витя',
-      phone: '+7 (928) 555 66 77',
     });
   }
 
@@ -48,4 +45,4 @@ class ProfilePage extends Block {
   }
 }
 
-export default ProfilePage;
+export default ProfilePasswordPage;

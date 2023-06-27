@@ -12,12 +12,13 @@ interface LinkProps {
 class Link extends Block {
   constructor(props: LinkProps) {
     super('fragment', props);
+    this.getContent()?.classList.add('linkWrapper');
   }
 
   render() {
-    return this.compile(template, { 
+    return this.compile(template, {
       label: this.props.label,
-      href: this.props.href
+      href: this.props.href,
     });
   }
 }

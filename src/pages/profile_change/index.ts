@@ -1,17 +1,17 @@
-import template from './profile.hbs';
+import template from './profile_change.hbs';
 import Block from '../../utils/block';
 import Button from '../../components/button';
 import Avatar from '../../components/avatar';
 import ProfileForm from '../../components/profile_form';
 
-interface ProfilePageProps {
+interface ProfileChangePageProps {
   firstName: string
 }
 
-class ProfilePage extends Block {
-  constructor(props:ProfilePageProps) {
+class ProfileChangePage extends Block {
+  constructor(props:ProfileChangePageProps) {
     super('main', props);
-    this.element!.classList.add('page_profile');
+    this.getContent()?.classList.add('page_profile');
   }
 
   init() {
@@ -30,7 +30,7 @@ class ProfilePage extends Block {
       src: '',
     });
     this.children.profileForm = new ProfileForm({
-      view: 'profile',
+      view: 'profile_change',
       email: 'example@gmail.com',
       login: 'Viktor',
       firstName: this.props.firstName,
@@ -48,4 +48,4 @@ class ProfilePage extends Block {
   }
 }
 
-export default ProfilePage;
+export default ProfileChangePage;

@@ -6,28 +6,30 @@ interface InputProps {
   type: string,
   id: string,
   class?: string,
+  value?: string,
   name: string,
   required: boolean,
   events: {
     input: (arg0:any) => void
+    focusout?: (arg0:any) => void
   }
 }
 
 class Input extends Block {
   constructor(props: InputProps) {
-    console.log('props', props);
     super('fragment', props);
     // this.element!.classList.add(`${props.class}`);
   }
 
   render() {
-    return this.compile(template, { 
+    return this.compile(template, {
       placeholder: this.props.placeholder,
-      class:  this.props.class,
-      name: this.props.name, 
-      id: this.props.id, 
-      type: this.props.type, 
-      required: this.props.required
+      class: this.props.class,
+      value: this.props.value,
+      name: this.props.name,
+      id: this.props.id,
+      type: this.props.type,
+      required: this.props.required,
     });
   }
 }

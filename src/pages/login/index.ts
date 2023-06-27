@@ -1,16 +1,32 @@
 import template from './login.hbs';
 import Block from '../../utils/block';
-import Form from '../../components/form';
+import Form from '../../components/form/index';
+import { TestLogin, TestPassword } from '../../utils/ui';
 
 class LoginPage extends Block {
   constructor() {
-    super('main');
-    this.element.classList.add('page_login');
+    super('main',{});
+    this.getContent()?.classList.add('page_login');
   }
 
-  init () {
+  init() {
     this.children.form = new Form({
-        view: 'login'
+      view: 'login',
+      events: {
+        submit: (e:any) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+          const login = formData.get('login');
+          const password = formData.get('password');
+
+          if (TestLogin(login!.toString()) && TestPassword(password!.toString())) {
+            console.log('loginData', {
+              login,
+              password,
+            });
+          }
+        },
+      },
     });
   }
 

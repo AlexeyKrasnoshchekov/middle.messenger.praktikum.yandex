@@ -9,16 +9,15 @@ interface AvatarProps {
 
 class Avatar extends Block {
   constructor(props: AvatarProps) {
-    console.log('props', props);
     super('fragment', props);
     this.element!.classList.add(`${props.class}`);
   }
 
   render() {
-    return this.compile(template, { 
+    return this.compile(template, {
       alt: this.props.alt,
-      class:  this.props.class,
-      src: this.props.src
+      class: this.props.class,
+      src: this.props.src,
     });
   }
 }

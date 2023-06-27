@@ -1,17 +1,17 @@
 import template from './main.hbs';
 import Block from '../../utils/block';
-import Input from '~components/input';
-import Button from '~components/button';
-import Avatar from '~components/avatar';
-import ChatItem from '~components/chatItem';
+import Button from '../../components/button/index';
+import Avatar from '../../components/avatar/index';
+import ChatItem from '../../components/chatItem/index';
+import Input from '../../components/input/index';
 
 class MainPage extends Block {
   constructor() {
-    super('main');
-    this.element.classList.add('page_main');
+    super('main',{});
+    this.element!.classList.add('page_main');
   }
 
-  init () {
+  init() {
     this.children.buttonAttach = new Button({
       view: 'attach',
       events: {
@@ -43,13 +43,13 @@ class MainPage extends Block {
     this.children.avatar = new Avatar({
       class: 'avatar',
       alt: 'аватар пользователя',
-      src: ''
+      src: '',
     });
     this.children.chatItem = new ChatItem({
-      src:'',
-      sender:'Виктор',
-      text:'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, rerum.',
-      time:'10:15',
+      src: '',
+      sender: 'Виктор',
+      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, rerum.',
+      time: '10:15',
       unread: true,
       events: {
         click: (e) => {
@@ -59,34 +59,34 @@ class MainPage extends Block {
       },
     });
 
-      this.children.inputMessage = new Input({
-        placeholder: 'message',
-        type: 'text',
-        class: 'message_input',
-        id: 'chat_message',
-        name: 'message',
-        required: false,
-        events: {
-          input: (e) => {
-            e.preventDefault();
-            console.log('typed');
-          },
+    this.children.inputMessage = new Input({
+      placeholder: 'message',
+      type: 'text',
+      class: 'message_input',
+      id: 'chat_message',
+      name: 'message',
+      required: false,
+      events: {
+        input: (e) => {
+          e.preventDefault();
+          console.log('typed');
         },
-      });
-      this.children.inputSearch = new Input({
-        placeholder: 'search',
-        type: 'search',
-        class: 'search_input',
-        id: 'chat_search',
-        name: 'search',
-        required: false,
-        events: {
-          input: (e) => {
-            e.preventDefault();
-            console.log('typed');
-          },
+      },
+    });
+    this.children.inputSearch = new Input({
+      placeholder: 'search',
+      type: 'search',
+      class: 'search_input',
+      id: 'chat_search',
+      name: 'search',
+      required: false,
+      events: {
+        input: (e) => {
+          e.preventDefault();
+          console.log('typed');
         },
-      });
+      },
+    });
   }
 
   // eslint-disable-next-line class-methods-use-this
