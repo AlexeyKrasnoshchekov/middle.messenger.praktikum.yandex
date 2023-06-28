@@ -2,7 +2,7 @@
 MiddleChat
 
 <b>ССЫЛКА НА NETLIFY:</b><br>
-https://sage-cajeta-9a9082.netlify.app/
+https://magnificent-kheer-779f98.netlify.app/
 
 <b>ССЫЛКА НА МАКЕТ:</b><br>
 https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?type=design&t=SuvxV7IGsU98lPxB-0
