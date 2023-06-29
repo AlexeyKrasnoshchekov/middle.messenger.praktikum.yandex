@@ -46,6 +46,12 @@ const TestMessage = (str:string):boolean => {
   return true;
 };
 
+const errorMessage = (id:string, message:string) => {
+  const error = document.getElementById(`error_${id}`);
+  error!.textContent = message;
+};
+
 export {
   toggleAttachMenu, TestLogin, TestPhone, TestEmail, TestName, TestPassword, TestMessage,
+  errorMessage,
 };

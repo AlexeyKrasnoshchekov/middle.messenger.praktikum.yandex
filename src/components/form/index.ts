@@ -4,6 +4,7 @@ import Block from '../../utils/block';
 import Input from '../input';
 import Link from '../link/index';
 import {
+  errorMessage,
   TestEmail, TestLogin, TestName, TestPassword, TestPhone,
 } from '../../utils/ui';
 
@@ -69,10 +70,14 @@ class Form extends Block {
           focusout: (e) => {
             e.preventDefault();
 
-            const valid = TestLogin(e.target.value);
+            const { value } = e.target;
+            const valid = value.length > 0 && TestLogin(value);
 
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Логин не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -91,10 +96,15 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestPassword(e.target.value);
-            console.log('first', valid);
+
+            const { value } = e.target;
+            const valid = value.length > 0 && TestPassword(value);
+
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Пароль не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -134,10 +144,14 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestEmail(e.target.value);
-            console.log('first', valid);
+
+            const { value } = e.target;
+            const valid = value.length > 0 && TestEmail(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Email не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -156,10 +170,14 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestLogin(e.target.value);
-            console.log('first', valid);
+
+            const { value } = e.target;
+            const valid = value.length > 0 && TestLogin(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Логин не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -178,10 +196,13 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestName(e.target.value);
-            console.log('first', valid);
+            const { value } = e.target;
+            const valid = value.length > 0 && TestName(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Имя не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -200,10 +221,15 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestName(e.target.value);
-            console.log('first', valid);
+
+            const { value } = e.target;
+            const valid = value.length > 0 && TestName(value);
+
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Фамилия не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -222,10 +248,14 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestPhone(e.target.value);
-            console.log('first', valid);
+
+            const { value } = e.target;
+            const valid = value.length > 0 && TestPhone(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Телефон не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -244,10 +274,13 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestPassword(e.target.value);
-            console.log('first', valid);
+            const { value } = e.target;
+            const valid = value.length > 0 && TestPassword(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Пароль не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -257,7 +290,7 @@ class Form extends Block {
         type: 'text',
         class: 'form_input',
         id: 'repeat_password',
-        name: 'repeat_password',
+        name: 'password',
         required: true,
         events: {
           input: (e) => {
@@ -266,10 +299,13 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestPassword(e.target.value);
-            console.log('first', valid);
+            const { value } = e.target;
+            const valid = value.length > 0 && TestPassword(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Пароль не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -302,10 +338,13 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestEmail(e.target.value);
-            console.log('first', valid);
+            const { value } = e.target;
+            const valid = value.length > 0 && TestEmail(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Email не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -325,10 +364,14 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestLogin(e.target.value);
-            console.log('first', valid);
+
+            const { value } = e.target;
+            const valid = value.length > 0 && TestLogin(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Логин не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -348,10 +391,14 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestName(e.target.value);
-            console.log('first', valid);
+
+            const { value } = e.target;
+            const valid = value.length > 0 && TestName(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Имя не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -371,10 +418,14 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestName(e.target.value);
-            console.log('first', valid);
+
+            const { value } = e.target;
+            const valid = value.length > 0 && TestName(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Фамилия не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -385,7 +436,7 @@ class Form extends Block {
         class: 'form_input',
         value: this.props.chatName,
         id: 'chat_name',
-        name: 'chat_name',
+        name: 'display_name',
         required: true,
         events: {
           input: (e) => {
@@ -394,10 +445,14 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestLogin(e.target.value);
-            console.log('first', valid);
+
+            const { value } = e.target;
+            const valid = value.length > 0 && TestLogin(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Имя в чате не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -417,10 +472,14 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestPassword(e.target.value);
-            console.log('first', valid);
+
+            const { value } = e.target;
+            const valid = value.length > 0 && TestPhone(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Телефон не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -452,10 +511,13 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestPassword(e.target.value);
-            console.log('first', valid);
+            const { value } = e.target;
+            const valid = value.length > 0 && TestPassword(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Пароль не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -474,10 +536,13 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestPassword(e.target.value);
-            console.log('first', valid);
+            const { value } = e.target;
+            const valid = value.length > 0 && TestPassword(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Пароль не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },
@@ -487,7 +552,7 @@ class Form extends Block {
         type: 'text',
         class: 'form_input',
         id: 'new_password_repeat',
-        name: 'newPasswordRepeat',
+        name: 'newPassword',
         required: true,
         events: {
           input: (e) => {
@@ -496,10 +561,13 @@ class Form extends Block {
           },
           focusout: (e) => {
             e.preventDefault();
-            const valid = TestPassword(e.target.value);
-            console.log('first', valid);
+            const { value } = e.target;
+            const valid = value.length > 0 && TestPassword(value);
             if (!valid) {
-              e.target.classList.add('invalid');
+              if (value.length > 0) {
+                errorMessage(e.target.id, 'Пароль не соответсвует требованиям');
+                e.target.classList.add('invalid');
+              }
             }
           },
         },

@@ -4,6 +4,7 @@ import Button from '../../components/button/index';
 import Avatar from '../../components/avatar/index';
 import ChatItem from '../../components/chatItem/index';
 import Input from '../../components/input/index';
+// import { errorMessage } from '../../utils/ui';
 
 class MainPage extends Block {
   constructor() {
@@ -71,6 +72,14 @@ class MainPage extends Block {
           e.preventDefault();
           console.log('typed');
         },
+        // focusout: (e) => {
+        //   e.preventDefault();
+        //   const message = e.target.value;
+        //   if (message.length === 0) {
+        //     errorMessage(e.target.id, 'Введите сообщение перед отправкой');
+        //     e.target.classList.add('invalid');
+        //   }
+        // },
       },
     });
     this.children.inputSearch = new Input({
