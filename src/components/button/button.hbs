@@ -1,11 +1,11 @@
 {{#if isFormButton}}
-  <button class="button_form">{{label}}</button>
+  {{label}}
 {{else if isAttachButton}}
-  <button class="button_attach"><i class="icon fa fa-paperclip" aria-hidden="true"></i></button>
+  <i class="icon fa fa-paperclip" aria-hidden="true"></i>
 {{else if isSendButton}}
-  <button class="button_send"><i class="icon fa fa-arrow-circle-right" aria-hidden="true"></i></button>
+  <i class="icon fa fa-arrow-circle-right" aria-hidden="true"></i>
 {{else if isBackButton}}
-  <button class="button_back">{{> link label="link" href="/" isIcon=true}}</button>
+  <i class="icon fa fa-arrow-circle-left" aria-hidden="true"></i>
 {{else if isMenuButton}}
-  <button class="button_menu"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
 {{/if}}
