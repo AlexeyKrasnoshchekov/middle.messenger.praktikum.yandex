@@ -4,6 +4,8 @@ import Button from '../../components/button/index';
 import Avatar from '../../components/avatar/index';
 import ChatItem from '../../components/chatItem/index';
 import Input from '../../components/input/index';
+import Router from '../../utils/router';
+import Link from '../../components/link/index';
 // import { errorMessage } from '../../utils/ui';
 
 class MainPage extends Block {
@@ -95,6 +97,17 @@ class MainPage extends Block {
           console.log('typed');
         },
       },
+    });
+
+    this.children.linkLogin = new Link({
+      href: '/login',
+      label: 'Login',
+      // events: {
+      //   click: (e:any) => {
+      //     e.preventDefault();
+      //     Router.go('/login');
+      //   },
+      // },
     });
   }
 

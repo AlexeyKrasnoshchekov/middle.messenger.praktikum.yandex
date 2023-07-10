@@ -23,12 +23,50 @@
             <span>Телефон</span>
             <span>{{phone}}</span>
           </div>
-          {{{link1}}}       
-          {{{link2}}}       
-          {{{link3}}}       
+          {{{changeProfile}}}       
+          {{{changePassword}}}       
+          {{{logout}}}       
 {{else if isProfileChange}}
-  {{{form}}}
+    <div class="page_profile_data  profile_change_input">
+          <label for="login">Почта</label>
+        {{{email}}}
+     </div>
+    <div class="page_profile_data profile_change_input">
+          <label for="password">Логин</label>
+        {{{login}}}
+     </div>
+    <div class="page_profile_data profile_change_input">
+          <label for="first_name">Имя</label>
+        {{{firstName}}}
+     </div>
+    <div class="page_profile_data profile_change_input">
+          <label for="second_name">Фамилия</label>
+        {{{lastName}}}
+     </div>
+    <div class="page_profile_data profile_change_input">
+          <label for="phone">Телефон</label>
+        {{{phone}}}
+     </div>
+    <div class="page_profile_data profile_change_input">
+          <label for="chat_name">Имя в чате</label>
+        {{{chatName}}}
+     </div>
+
+    
+    {{{button}}}
 {{else if isProfilePassword}}
-  {{{form}}}
+    <div class="page_profile_data  profile_change_input">
+          <label for="oldPassword">Старый пароль</label>
+        {{{oldPassword}}}
+     </div>
+    <div class="page_profile_data  profile_change_input">
+          <label for="newPassword">Новый пароль</label>
+        {{{newPassword}}}
+     </div>
+    <div class="page_profile_data profile_change_input">
+          <label for="new_password_repeat">Новый пароль</label>
+        {{{repeatNewPassword}}}
+     </div>
+    {{{button}}}
 
 {{/if}}

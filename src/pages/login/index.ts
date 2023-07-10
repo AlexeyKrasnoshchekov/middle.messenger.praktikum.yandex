@@ -1,7 +1,10 @@
 import template from './login.hbs';
 import Block from '../../utils/block';
-import Form from '../../components/form/index';
-import { TestLogin, TestPassword } from '../../utils/ui';
+import { errorMessage, TestLogin, TestPassword } from '../../utils/ui';
+import AuthController from '../../controllers/AuthController';
+import Input from '../../components/input';
+import Link from '../../components/link';
+import Button from '../../components/button';
 
 class LoginPage extends Block {
   constructor() {
@@ -10,24 +13,86 @@ class LoginPage extends Block {
   }
 
   init() {
-    this.children.form = new Form({
-      view: 'login',
+    this.children.link = new Link({
+      href: '/signin',
+      label: 'Нет аккаунта?',
+    });
+    this.children.button = new Button({
+      label: 'Войти',
+      view: 'form',
       events: {
-        submit: (e:any) => {
+        click: () => this.onSubmit(),
+      },
+    });
+    this.children.login = new Input({
+      placeholder: 'enter login',
+      type: 'text',
+      class: 'form_input',
+      id: 'login',
+      name: 'login',
+      required: true,
+      events: {
+        input: (e) => {
           e.preventDefault();
-          const formData = new FormData(e.target);
-          const login = formData.get('login');
-          const password = formData.get('password');
+          console.log('typed');
+        },
+        focusout: () => {
+          const input = this.children.login;
+          const inputHTML = (input as Input).getHTMLElement();
+          const { value } = inputHTML;
+          const valid = value.length > 0 && TestLogin(value);
 
-          if (TestLogin(login!.toString()) && TestPassword(password!.toString())) {
-            console.log('loginData', {
-              login,
-              password,
-            });
+          if (!valid) {
+            if (value.length > 0) {
+              errorMessage(inputHTML, 'Логин не соответсвует требованиям');
+            }
           }
         },
       },
     });
+    this.children.password = new Input({
+      placeholder: 'enter password',
+      type: 'text',
+      class: 'form_input',
+      id: 'password',
+      name: 'password',
+      required: true,
+      events: {
+        input: (e) => {
+          e.preventDefault();
+          console.log('typed');
+        },
+        focusout: () => {
+          const input = this.children.password;
+          const inputHTML = (input as Input).getHTMLElement();
+          const { value } = inputHTML;
+          const valid = value.length > 0 && TestPassword(value);
+          console.log('valid', valid);
+          if (!valid) {
+            if (value.length > 0) {
+              errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
+            }
+          }
+        },
+      },
+    });
+  }
+
+  onSubmit() {
+    const values = Object
+      .values(this.children)
+      .filter((child) => child instanceof Input)
+      .map((child) => ([(child as Input).getName(), (child as Input).getValue()]));
+
+    const data = Object.fromEntries(values);
+
+    if (
+      TestLogin(data.login!.toString())
+    && TestPassword(data.password!.toString())
+    ) {
+      console.log('first888');
+      AuthController.signin(data);
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this

@@ -3,6 +3,7 @@ import Block from '../../utils/block';
 import Button from '../../components/button';
 import Avatar from '../../components/avatar';
 import ProfileForm from '../../components/profile_form';
+import Router from '../../utils/router';
 
 interface ProfileChangePageProps {
   firstName: string
@@ -20,7 +21,7 @@ class ProfileChangePage extends Block {
       events: {
         click: (e:any) => {
           e.preventDefault();
-          window.location.href = '/';
+          Router.back();
         },
       },
     });
@@ -31,12 +32,7 @@ class ProfileChangePage extends Block {
     });
     this.children.profileForm = new ProfileForm({
       view: 'profile_change',
-      email: 'example@gmail.com',
-      login: 'Viktor',
-      firstName: this.props.firstName,
-      lastName: 'Петров',
-      chatName: 'Витя',
-      phone: '+7 (928) 555 66 77',
+      firstName: this.props.firstName
     });
   }
 
