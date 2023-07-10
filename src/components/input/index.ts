@@ -11,7 +11,7 @@ interface InputProps {
   required: boolean,
   events: {
     input: (arg0:any) => void
-    focusout?: (arg0:any) => void
+    focusout?: () => void
   }
 }
 
@@ -19,6 +19,18 @@ class Input extends Block {
   constructor(props: InputProps) {
     super('fragment', props);
     // this.element!.classList.add(`${props.class}`);
+  }
+
+  public getName() {
+    return (this.element.querySelector('input') as HTMLInputElement).name;
+  }
+
+  public getValue() {
+    return (this.element.querySelector('input') as HTMLInputElement).value;
+  }
+
+  public getHTMLElement() {
+    return (this.element.querySelector('input') as HTMLInputElement);
   }
 
   render() {

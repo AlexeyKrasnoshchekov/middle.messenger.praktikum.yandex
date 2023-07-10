@@ -3,6 +3,9 @@ import Block from '../../utils/block';
 import Button from '../../components/button';
 import Avatar from '../../components/avatar';
 import ProfileForm from '../../components/profile_form';
+import store from '../../utils/store';
+import Router from '../../utils/router';
+import AuthController from '../../controllers/AuthController';
 
 interface ProfilePageProps {
   firstName: string
@@ -12,6 +15,13 @@ class ProfilePage extends Block {
   constructor(props:ProfilePageProps) {
     super('main', props);
     this.element!.classList.add('page_profile');
+
+    // UserController.getUser();
+
+    // store.on(StoreEvents.Updated, () => {
+    //   // вызываем обновление компонента, передав данные из хранилища
+    //   this.setProps(store.getState());
+    // });
   }
 
   init() {
@@ -20,7 +30,7 @@ class ProfilePage extends Block {
       events: {
         click: (e:any) => {
           e.preventDefault();
-          window.location.href = '/';
+          Router.back();
         },
       },
     });
@@ -31,17 +41,20 @@ class ProfilePage extends Block {
     });
     this.children.profileForm = new ProfileForm({
       view: 'profile',
-      email: 'example@gmail.com',
-      login: 'Viktor',
       firstName: this.props.firstName,
-      lastName: 'Петров',
-      chatName: 'Витя',
-      phone: '+7 (928) 555 66 77',
     });
+    // this.children.profileForm.dispatchComponentDidMount();
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  async componentDidMount(): void {
+    console.log('first');
+    AuthController.fetchUser();
   }
 
   // eslint-disable-next-line class-methods-use-this
   render() {
+    // this.children.profileForm.dispatchComponentDidMount();
     return this.compile(template, {
       firstName: this.props.firstName,
     });

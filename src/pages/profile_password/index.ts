@@ -3,6 +3,7 @@ import Block from '../../utils/block';
 import Button from '../../components/button';
 import Avatar from '../../components/avatar';
 import ProfileForm from '../../components/profile_form';
+import Router from '../../utils/router';
 
 interface ProfilePasswordPageProps {
   firstName: string
@@ -20,7 +21,7 @@ class ProfilePasswordPage extends Block {
       events: {
         click: (e:any) => {
           e.preventDefault();
-          window.location.href = '/';
+          Router.back();
         },
       },
     });

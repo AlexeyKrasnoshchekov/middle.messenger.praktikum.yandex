@@ -244,10 +244,12 @@ class Block<P extends Record<string, any> = any> {
   }
 
   show() {
-    this.getContent()!.style.display = 'block';
+    console.log('show');
+    this.getContent()!.style.display = 'flex';
   }
 
   hide() {
+    console.log('hide');
     this.getContent()!.style.display = 'none';
   }
 }
