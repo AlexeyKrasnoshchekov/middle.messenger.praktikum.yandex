@@ -30,14 +30,14 @@ export class AuthAPI extends API {
     super('/auth');
   }
 
-  signin(data: ILoginData): Promise<XMLHttpRequest> {
+  signin(data: ILoginData) {
     const options = {
       data,
     };
     return this.http.post('/signin', options);
   }
 
-  signup(data: IRegisterData): Promise<XMLHttpRequest> {
+  signup(data: IRegisterData) {
     console.log('data222', data);
     const options = {
       data,
@@ -45,11 +45,11 @@ export class AuthAPI extends API {
     return this.http.post('/signup', options);
   }
 
-  logout(): Promise<XMLHttpRequest> {
+  logout() {
     return this.http.post('/logout');
   }
 
-  getUser(): Promise<XMLHttpRequest> {
+  getUser() {
     return this.http.get('/user');
   }
 }

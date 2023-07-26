@@ -1,0 +1,11 @@
+<div class="messages_area">
+   {{#if selectedChat }}
+        <div class="messages_list">
+            {{#each messages}}
+                {{{this}}}
+            {{/each}}
+        </div>
+    {{else}}
+        Выберите чат
+    {{/if}}
+</div>

@@ -1,40 +1,56 @@
 
-     <nav class="page_main_nav">
-          <ul>
-               {{!-- <li><a href="/login" onclick="route()">Login</a></li> --}}
-               <li>{{{linkLogin}}}</li>
-               <li><a href="/signin" onclick="route()">Signin</a></li>
-               <li><a href="/profile" onclick="route()">Profile</a></li>
-               <li><a href="/notFound" onclick="route()">404</a></li>
-               <li><a href="/error_500" onclick="route()">500</a></li>
-          </ul>
-     </nav>
+     
      <div class="chat">
+          
           <aside class="chat_sidebar">
+               <nav class="page_main_nav">
+                    <ul>
+                         {{!-- <li><a href="/login" onclick="route()">Login</a></li> --}}
+                         <li>{{{linkLogin}}}</li>
+                         <li><a href="/signin" onclick="route()">Signin</a></li>
+                         <li><a href="/profile" onclick="route()">Profile</a></li>
+                         <li><a href="/notFound" onclick="route()">404</a></li>
+                         <li><a href="/error_500" onclick="route()">500</a></li>
+                    </ul>
+               </nav>
                <div class="chat_top">
+                    {{{link}}}
                     {{{inputSearch}}}
+                    {{{createChat}}}
+                    {{{createChatModal}}}
                </div>
                <div class="chat_items_list">
-                    {{{chatItem}}}
+                    {{{chatsList}}}
                </div>
           </aside>
           <section class="chat_place">
                <div class="chat_place_top">
-                    <div class="chat_user">
-                         {{{avatar}}}
-                         <p class="chat_user_name">Вадим</p>
-                    </div>
-                    <span class="chat_menu">{{{buttonMenu}}}</span>
+                         {{#if id }}
+                              <span>{{{avatar}}}</span>
+                         {{/if}}
+                         
+                         {{{avatarModal}}}
+                         <p class="chat_title">Имя чата: {{title}}</p>
+                         <ul class="chat_users">
+                              <span>Учасники:</span>
+                              {{#each users}}
+                                   <li>{{this.login}}</li>
+                              {{/each}}
+                         </ul>
+
+                    <span class="chat_menu">
+                         {{{buttonMenu}}}
+                         {{{menuModal}}}
+                         {{{userModal}}}
+                    </span>
                </div>
-               <div class="chat_place_middle"></div>
+               <div class="chat_place_middle">
+                    {{{messengesArea}}}
+               </div>
                <div class="chat_place_bottom">
                     <div class="chat_attachment">
                          {{{buttonAttach}}}
-                         <div class="chat_attachment_choice">
-                              <div class="chat_attachment_type"><span><i class="fa fa-file-image" aria-hidden="true"></i></span><span>Фото или Видео</span></div>
-                              <div class="chat_attachment_type"><span><i class="fa fa-file" aria-hidden="true"></i></span><span>Файл</span></div>
-                              <div class="chat_attachment_type"><span><i class="fa fa-location-arrow" aria-hidden="true"></i></span><span>Локация</span></div>
-                         </div>
+                         {{{attachModal}}}
                     </div>
                     <div class="chat_message_input">
                          {{{inputMessage}}}

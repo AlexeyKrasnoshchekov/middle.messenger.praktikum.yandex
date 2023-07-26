@@ -1,10 +1,18 @@
 /* eslint-disable max-classes-per-file */
-import { IUser } from '../api/AuthAPI';
 import EventBus from './event-bus';
 import { set } from './index';
+import { ChatInfo } from '../api/ChatAPI';
+import { IUser } from '../api/AuthAPI';
+import { Message } from '../types/index';
 
 export interface State {
   user?: IUser;
+  profileView: string;
+  isOpenUserModal: boolean;
+  userModalAction: string;
+  chats?: ChatInfo[];
+  messages: Record<number, Message[]>;
+  selectedChat?: ChatInfo;
 }
 
 export enum StorageEvent {
@@ -12,7 +20,12 @@ export enum StorageEvent {
 }
 
 class Store extends EventBus {
-  private state: State = {};
+  private state: State = {
+    isOpenUserModal: false,
+    userModalAction: '',
+    profileView: 'profile',
+    messages: [],
+  };
 
   getState() {
     return this.state;
@@ -21,27 +34,23 @@ class Store extends EventBus {
   set(path: string, value: unknown) {
     set(this.state, path, value);
 
-    console.log(this.state);
-
     this.emit(StorageEvent.UpdateState, this.state);
   }
 }
 
 const store = new Store();
 
-// export function withStore(Component:any) {
-//   return class extends Component {
-//     constructor(props: any) {
-//       const state = store.getState();
-//       console.log('props555',props);
-//       super('div', { ...props, ...state });
+export function withStore(mapStateToProps: (state: State) => any) {
+  return (Component: any) => class extends Component {
+    constructor(props: any) {
+      super('div', { ...props, ...mapStateToProps(store.getState()) });
 
-//       store.on(StorageEvent.UpdateState, () => {
-//         //   const propsFromState = mapStateToProps(store.getState());
-//         this.setProps(state);
-//       });
-//     }
-//   };
-// }
+      store.on(StorageEvent.UpdateState, () => {
+        const propsFromState = mapStateToProps(store.getState());
+        this.setProps(propsFromState);
+      });
+    }
+  };
+}
 
 export default store;

@@ -1,22 +1,18 @@
 import './src/styles/index.less';
-import { toggleAttachMenu } from './src/utils/ui';
 
 import LoginPage from './src/pages/login/index';
 import RegisterPage from './src/pages/signin/index';
-import ProfilePage from './src/pages/profile/index';
-import ProfileChangePage from './src/pages/profile_change/index';
-import ProfilePasswordPage from './src/pages/profile_password/index';
+import { ProfilePage } from './src/pages/profile/index';
 import MainPage from './src/pages/main/index';
 import Error500Page from './src/pages/500/index';
 import NotFoundPage from './src/pages/404/index';
 import Router from './src/utils/router';
 import AuthController from './src/controllers/AuthController';
-import store from './src/utils/store';
 
 enum Routes {
-  Index = '/',
+  Messenger = '/messenger',
   Profile = '/profile',
-  Login = '/login',
+  Login = '/',
   Register = '/signin',
   ChangeProfile = '/profile_change',
   ChangePassword = '/profile_password',
@@ -27,19 +23,15 @@ enum Routes {
 window.addEventListener('DOMContentLoaded', async () => {
   const loginPage = new LoginPage();
   const registerPage = new RegisterPage();
-  const profilePage = new ProfilePage({ firstName: 'Виктор' });
-  const profileChangePage = new ProfileChangePage({ firstName: 'Виктор' });
-  const profilePasswordChangePage = new ProfilePasswordPage({ firstName: 'Виктор' });
+  const profilePage = new ProfilePage();
   const mainPage = new MainPage();
   const error500Page = new Error500Page();
   const error404Page = new NotFoundPage();
 
-  Router.use(Routes.Index, mainPage);
+  Router.use(Routes.Messenger, mainPage);
   Router.use(Routes.Login, loginPage);
   Router.use(Routes.Register, registerPage);
   Router.use(Routes.Profile, profilePage);
-  Router.use(Routes.ChangeProfile, profileChangePage);
-  Router.use(Routes.ChangePassword, profilePasswordChangePage);
   Router.use(Routes.Error500, error500Page);
   Router.use(Routes.Error404, error404Page);
 
@@ -56,13 +48,11 @@ window.addEventListener('DOMContentLoaded', async () => {
   }
 
   try {
-    
-    const state = store.getState();
-    console.log('state111', state);
+    await AuthController.fetchUser();
     Router.start();
 
     if (!isProtectedRoute) {
-      Router.go(Routes.Profile);
+      Router.go(Routes.Messenger);
     }
   } catch (e) {
     Router.start();
@@ -71,5 +61,4 @@ window.addEventListener('DOMContentLoaded', async () => {
       Router.go(Routes.Login);
     }
   }
-
 });

@@ -1,6 +1,7 @@
-import router from '../utils/router';
 import { AuthAPI, ILoginData, IRegisterData } from '../api/AuthAPI';
+import router from '../utils/router';
 import store from '../utils/store';
+import WSController from './WSController';
 
 class AuthController {
   private api = new AuthAPI();
@@ -10,12 +11,11 @@ class AuthController {
       await this.api.signin(data);
 
       await this.fetchUser();
-      console.log('333',store.getState());
-      router.go('/profile');
+      router.go('/messenger');
     } catch (error) {
-      if (error.reason === 'User already in system') {
-        router.go('/profile');
-      }
+      // if (error.reason === 'User already in system') {
+      //   router.go('/');
+      // }
       console.log(error);
     }
   }
@@ -25,7 +25,7 @@ class AuthController {
       console.log('data111', data);
       await this.api.signup(data);
 
-      router.go('/profile');
+      router.go('/messenger');
     } catch (error) {
       console.log(error);
     }
@@ -34,11 +34,12 @@ class AuthController {
   async logout() {
     console.log('logout');
     try {
+      WSController.closeAll();
+
       await this.api.logout();
 
       store.set('user', undefined);
-
-      router.go('/login');
+      router.go('/');
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +47,6 @@ class AuthController {
 
   async fetchUser() {
     const user = await this.api.getUser();
-    console.log('user11', user);
     store.set('user', user);
     // try {
     //   const user = await this.api.getUser();

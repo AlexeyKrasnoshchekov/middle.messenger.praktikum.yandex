@@ -19,9 +19,16 @@
     .chat_item_center {
         width: 70%;
 
+        .top {
+            height: 50%;
+            margin-bottom: 10px;
+        }
+
         .chat_item_sender {
             margin: 0;
+            
         }
+
     }
     .chat_item_right {
         display: flex;
@@ -29,15 +36,26 @@
         justify-content: space-between;
         align-items: center;
         width: 15%;
+
+        .top {
+            font-size: 0.65rem;
+            height: 50%;
+        }
         
         .chat_item_unread {
+            height: 50%;
             text-align: center;
             width: 1rem;
             height: 1rem;
+            font-size: 0.65rem;
             background-color: blue;
             color: white;
             border-radius: 50%;
         }
 
     }
+}
+.chat_selected, .chat_item:hover {
+    background-color: @background-color;
+    cursor: pointer;
 }

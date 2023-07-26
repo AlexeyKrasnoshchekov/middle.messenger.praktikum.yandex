@@ -1,10 +1,20 @@
-
+<div class="chat_item {{#if isSelected }}chat_selected{{/if}}">
     <div class="chat_item_left">{{{avatar}}}</div>
-    <div class="chat_item_center">
-        <h4 class="chat_item_sender">{{sender}}</h4>
-        <p>{{text}}</p>
+        <div class="chat_item_center">
+            <div class="top">
+                <span>{{title}}</span>
+                <h4 class="chat_item_sender">{{sender}}</h4>
+            </div>
+            
+            <span>{{text}}</span>
+        </div>
+        <div class="chat_item_right">
+            <div class="top">
+                <span>{{date}}</span>
+                <span>{{time}}</span>
+            </div>
+            {{#if unread_count }}
+                <span class="chat_item_unread">{{unread_count}}</span>
+            {{/if}}
     </div>
-    <div class="chat_item_right">
-        <span>{{time}}</span>
-       <span class="chat_item_unread">1</span>
-    </div>
+</div>

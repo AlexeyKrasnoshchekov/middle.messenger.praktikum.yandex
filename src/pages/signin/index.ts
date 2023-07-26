@@ -17,7 +17,7 @@ class SigninPage extends Block {
 
   init() {
     this.children.link = new Link({
-      href: '/login',
+      href: '/messenger',
       label: 'Войти',
       // events: {
       //   click: (e:any) => {
@@ -31,6 +31,7 @@ class SigninPage extends Block {
       view: 'form',
       events: {
         click: () => this.onSubmit(),
+        // click: () => console.log('signup'),
       },
     });
     this.children.email = new Input({
@@ -265,7 +266,10 @@ class SigninPage extends Block {
             && TestPassword(data.password!.toString())
             && TestPassword(data.password_repeat!.toString())
     ) {
+      console.log('signup');
       AuthController.signup(data);
+    } else {
+      throw new Error('поля заполнены неправильно')
     }
   }
 

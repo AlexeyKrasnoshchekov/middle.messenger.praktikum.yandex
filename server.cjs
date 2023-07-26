@@ -5,9 +5,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const routes = {
-  Main: '/',
+  Main: '/messenger',
   Profile: '/profile/',
-  Login: '/login/',
+  Login: '/',
   Signin: '/signin/',
   ChangeProfile: '/profile_change/',
   ChangePassword: '/profile_password/',

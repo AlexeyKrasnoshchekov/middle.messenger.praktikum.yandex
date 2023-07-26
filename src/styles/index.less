@@ -15,11 +15,45 @@
 @import '~components/chatItem/chatItem.less';
 @import '~components/input/input.less';
 @import '~components/link/link.less';
-@import '~components/profile_form/profile_form.less';
+@import '~components/modal/modal.less';
+@import '~components/message/message.less';
 
 * {
     box-sizing: border-box;
     max-width: 100%;
+}
+
+.button-reset() {
+    // padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.button_form() {
+    display: inline-block;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    background: @primary-color;
+    color: @text-color;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: @font;
+    text-align: center;
+    transition: background 250ms ease-in-out, 
+                color 150ms ease;
+
+    
+}
+
+.button_form_hover() {
+    background: @link-color;
+    color: white;
 }
 
 body {

@@ -31,7 +31,7 @@ class Block<P extends Record<string, any> = any> {
   //        * @returns {void}
   //        */
 
-  constructor(tagName:string, propsWithChildren:P) {
+  constructor(tagName:string | null, propsWithChildren:P) {
     const eventBus = new EventBus();
 
     const { props, children } = this._getChildrenAndProps(propsWithChildren);
