@@ -1,5 +1,11 @@
 <div class="chat_item {{#if isSelected }}chat_selected{{/if}}">
-    <div class="chat_item_left">{{{avatar}}}</div>
+    <div class="chat_item_left">
+        {{#if avatar }}
+                    <span>{{{avatar}}}</span>
+               {{else}}
+                    <span class="avatar"></span>
+               {{/if}}
+    </div>
         <div class="chat_item_center">
             <div class="top">
                 <span>{{title}}</span>

@@ -8,6 +8,7 @@ import Error500Page from './src/pages/500/index';
 import NotFoundPage from './src/pages/404/index';
 import Router from './src/utils/router';
 import AuthController from './src/controllers/AuthController';
+import Block from './src/utils/block';
 
 enum Routes {
   Messenger = '/messenger',
@@ -23,15 +24,15 @@ enum Routes {
 window.addEventListener('DOMContentLoaded', async () => {
   const loginPage = new LoginPage();
   const registerPage = new RegisterPage();
-  const profilePage = new ProfilePage();
-  const mainPage = new MainPage();
+  const profilePage = new ProfilePage({});
+  const mainPage = new MainPage({});
   const error500Page = new Error500Page();
   const error404Page = new NotFoundPage();
 
-  Router.use(Routes.Messenger, mainPage);
+  Router.use(Routes.Messenger, mainPage as Block);
   Router.use(Routes.Login, loginPage);
   Router.use(Routes.Register, registerPage);
-  Router.use(Routes.Profile, profilePage);
+  Router.use(Routes.Profile, profilePage as Block);
   Router.use(Routes.Error500, error500Page);
   Router.use(Routes.Error404, error404Page);
 

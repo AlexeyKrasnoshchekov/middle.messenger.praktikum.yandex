@@ -2,7 +2,7 @@ import template from './profile.hbs';
 import Block from '../../utils/block';
 import Button from '../../components/button';
 import Avatar from '../../components/avatar';
-import store, { State, StorageEvent, withStore } from '../../utils/store';
+import store, { State, withStore } from '../../utils/store';
 import Router from '../../utils/router';
 import AuthController from '../../controllers/AuthController';
 import Input from '../../components/input/index';
@@ -16,15 +16,7 @@ class BaseProfile extends Block {
   constructor() {
     super('main', {});
     this.element!.classList.add('page_profile');
-
-    // UserController.getUser();
     store.set('profileView', 'profile');
-
-    // console.log('props222',this.props);
-    // store.on(StoreEvents.Updated, () => {
-    //   // вызываем обновление компонента, передав данные из хранилища
-    //   this.setProps(store.getState());
-    // });
   }
 
   init() {
@@ -58,12 +50,12 @@ class BaseProfile extends Block {
           e.preventDefault();
           e.stopPropagation();
 
-          if (this.children.avatarModal.props.visible) {
-            this.children.avatarModal.hide();
-            this.children.avatarModal.setProps({ visible: false });
+          if ((this.children.avatarModal as Modal).getProps().visible) {
+            (this.children.avatarModal as Block).hide();
+            (this.children.avatarModal as Block).setProps({ visible: false });
           } else {
-            this.children.avatarModal.show();
-            this.children.avatarModal.setProps({ visible: true });
+            (this.children.avatarModal as Block).show();
+            (this.children.avatarModal as Block).setProps({ visible: true });
           }
         },
       },
@@ -255,16 +247,6 @@ class BaseProfile extends Block {
         },
       },
     });
-    // this.children.button = new Button({
-    //   label: 'Сохранить',
-    //   view: 'form',
-    //   // events: {
-    //   //   sub: (e:any) => {
-    //   //     e.preventDefault();
-    //   //     console.log('clicked');
-    //   //   },
-    //   // },
-    // });
 
     this.children.oldPassword = new Input({
       placeholder: 'enter old password',
@@ -363,6 +345,7 @@ class BaseProfile extends Block {
       .values(this.children)
       .filter((child) => child instanceof Input);
 
+    // eslint-disable-next-line max-len
     const values = inputs.map((child) => ([(child as Input).getName(), (child as Input).getValue()]));
 
     const data = Object.fromEntries(values);
@@ -384,33 +367,33 @@ class BaseProfile extends Block {
       ) {
         UserController.changeProfile(data);
       }
+      store.set('profileView', 'profile');
     }
     if (state.profileView === 'profilePassword') {
-      console.log('data111', data);
       const data2 = {
         newPassword: data.newPassword,
         oldPassword: data.oldPassword,
         repeatNewPassword: data.newPasswordRepeat,
       };
 
-      console.log('data2', data2);
-
       if (
         TestPassword(data2.oldPassword!.toString())
         && TestPassword(data2.newPassword!.toString())
+        // eslint-disable-next-line max-len
         && (data2.repeatNewPassword!.toString() === data2.newPassword!.toString() && TestPassword(data2.repeatNewPassword!.toString()))
       ) {
         UserController.changePassword(data2);
       }
 
       // очистка инпутов
-      inputs.forEach((input) => { input.setValue(''); });
+      inputs.forEach((input) => { (input as Input).setValue(''); });
     }
   }
 
-  protected componentDidUpdate(oldProps: State, newProps: State): boolean {
+  protected componentDidUpdate(_oldProps: State, newProps: State): boolean {
     if (newProps.user) {
-      this.children.avatar.setProps({
+      (this.children.avatar as Block).setProps({
+        // eslint-disable-next-line max-len
         src: newProps.user.avatar !== null ? `https://ya-praktikum.tech/api/v2/resources${newProps.user.avatar}` : undefined,
       });
     }
@@ -420,15 +403,14 @@ class BaseProfile extends Block {
 
   // eslint-disable-next-line class-methods-use-this
   render() {
-    // console.log('this.children.email',this.children.email1);
     if (this.props.user) {
-      this.children.email1.setProps({ value: this.props.user.email });
-      this.children.login1.setProps({ value: this.props.user.login });
-      this.children.firstName.setProps({ value: this.props.user.first_name });
-      this.children.lastName.setProps({ value: this.props.user.second_name });
-      this.children.chatName.setProps({ value: this.props.user.display_name });
-      this.children.phone1.setProps({ value: this.props.user.phone });
-      this.children.avatar.setProps({
+      (this.children.email1 as Block).setProps({ value: this.props.user.email });
+      (this.children.login1 as Block).setProps({ value: this.props.user.login });
+      (this.children.firstName as Block).setProps({ value: this.props.user.first_name });
+      (this.children.lastName as Block).setProps({ value: this.props.user.second_name });
+      (this.children.chatName as Block).setProps({ value: this.props.user.display_name });
+      (this.children.phone1 as Block).setProps({ value: this.props.user.phone });
+      (this.children.avatar as Block).setProps({
         src: `https://ya-praktikum.tech/api/v2/resources${this.props.user.avatar}`,
       });
     }
@@ -442,9 +424,10 @@ class BaseProfile extends Block {
 }
 
 function mapStateToProps(state: State) {
-  return { ...state };
+  // return { user: {...state.user} };
+  return { user: state.user, profileView: state.profileView };
 }
 
 // eslint-disable-next-line import/prefer-default-export
-export const ProfilePage = withStore(mapStateToProps)(BaseProfile?);
+export const ProfilePage = withStore(mapStateToProps)(BaseProfile);
 // export default ProfilePage;

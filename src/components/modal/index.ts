@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import Button from '../button';
 import Block from '../../utils/block';
 import template from './modal.hbs';
@@ -64,7 +65,6 @@ class Modal extends Block {
         events: {
           click: (e:MouseEvent) => {
             e.preventDefault();
-            console.log('clicked');
           },
         },
       });
@@ -74,7 +74,6 @@ class Modal extends Block {
         events: {
           click: (e:MouseEvent) => {
             e.preventDefault();
-            console.log('clicked');
           },
         },
       });
@@ -84,7 +83,6 @@ class Modal extends Block {
         events: {
           click: (e:MouseEvent) => {
             e.preventDefault();
-            console.log('clicked');
           },
         },
       });
@@ -113,12 +111,10 @@ class Modal extends Block {
           click: (e:MouseEvent) => {
             e.preventDefault();
             e.stopPropagation();
-            console.log('clicked');
             store.set('isOpenUserModal', true);
             store.set('userModalAction', 'del');
             this.hide();
             this.setProps({ visible: false });
-            // this.hide();
           },
         },
       });
@@ -133,10 +129,6 @@ class Modal extends Block {
             e.preventDefault();
             e.stopPropagation();
             store.set('isOpenUserModal', false);
-            if (this.props.visible) {
-              this.hide();
-              this.setProps({ visible: false });
-            }
           },
         },
       });
@@ -163,7 +155,6 @@ class Modal extends Block {
           click: async (e:MouseEvent) => {
             e.preventDefault();
             const state = store.getState();
-            console.log('state', state.selectedChat!.id);
 
             const input = this.children.userLogin;
             const inputHTML = (input as Input).getHTMLElement();
@@ -176,16 +167,20 @@ class Modal extends Block {
             }
 
             const user = await UserController.searchUser(value);
-            state.selectedChat!.users!.push(user);
-            console.log('user', user);
 
             if (this.props.userModalAction === 'add') {
-              await ChatController.addUser(state.selectedChat!.id, user[0].id);
+              await ChatController.addUser(state.selectedChatId!, user[0].id);
+              const newChatUsers = state.chatUsers;
+              const newChatUsers2 = [...newChatUsers!, user[0].login];
+              store.set('chatUsers', newChatUsers2);
             }
             if (this.props.userModalAction === 'del') {
-              await ChatController.removeUser(state.selectedChat!.id, user[0].id);
+              await ChatController.removeUser(state.selectedChatId!, user[0].id);
+              const newChatUsers = (state.chatUsers as Array<string>).filter((chatUser) => chatUser !== user[0].login);
+              store.set('chatUsers', newChatUsers);
             }
             this.hide();
+            store.set('isOpenUserModal', false);
           },
         },
       });
@@ -240,18 +235,15 @@ class Modal extends Block {
           click: async (e:MouseEvent) => {
             e.preventDefault();
             const state = store.getState();
-            console.log('state', state);
             if (window.location.pathname === '/messenger') {
-              formData.append('chatId', state.selectedChat!.id.toString());
+              formData.append('chatId', state.selectedChat!.toString());
               ChatController.addAvatar(formData);
-            //   const response = await ChatController.addAvatar(formData);
-            //   console.log('response',response);
-            //   const resData = await response.json();
-            //   console.log('resData',resData);
             } else if (window.location.pathname === '/profile') {
               UserController.changeAvatar(formData);
             }
             this.hide();
+            formData.delete('avatar');
+            this.setProps({ visible: false });
           },
         },
       });
@@ -280,22 +272,7 @@ class Modal extends Block {
             console.log('typed');
           },
           change: (e) => {
-            console.log('first', e.target.files[0]);
             formData.append('avatar', e.target.files[0]);
-            // this.setProps({avatar: e.target.files[0]});
-            // console.log('formData222',formData.get('file'));
-            // store.set('avatar', formData);
-            // console.log('first', this.files);
-            // const input = this.children.login;
-            // const inputHTML = (input as Input).getHTMLElement();
-            // const { value } = inputHTML;
-            // const valid = value.length > 0 && TestLogin(value);
-
-            // if (!valid) {
-            //   if (value.length > 0) {
-            //     errorMessage(inputHTML, 'Логин не соответсвует требованиям');
-            //   }
-            // }
           },
         },
       });
@@ -306,9 +283,14 @@ class Modal extends Block {
     return (this.element as HTMLDivElement);
   }
 
+  public getProps() {
+    return (this.props as ModalProps);
+  }
+
   render() {
     if (this.props.userModalAction !== '' && this.props.view === 'user') {
-      this.children.action.setProps({ label: this.props.userModalAction === 'add' ? 'Добавить' : 'Удалить' });
+      // eslint-disable-next-line max-len
+      (this.children.action as Block).setProps({ label: this.props.userModalAction === 'add' ? 'Добавить' : 'Удалить' });
     }
     return this.compile(template, {
       isAttachModal: this.props.view === 'attach',

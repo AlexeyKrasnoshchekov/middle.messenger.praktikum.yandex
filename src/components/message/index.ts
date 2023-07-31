@@ -8,8 +8,7 @@ interface MessageProps {
 
 class MessageElem extends Block<MessageProps> {
   constructor(props: MessageProps) {
-    super(null, { ...props });
-    console.log('props111',props);
+    super('fragment', { ...props });
   }
 
   protected render(): DocumentFragment {

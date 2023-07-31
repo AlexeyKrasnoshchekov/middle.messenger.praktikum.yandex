@@ -22,7 +22,6 @@ class AuthController {
 
   async signup(data: IRegisterData) {
     try {
-      console.log('data111', data);
       await this.api.signup(data);
 
       router.go('/messenger');

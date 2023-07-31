@@ -62,18 +62,6 @@ class LoginPage extends Block {
           e.preventDefault();
           console.log('typed');
         },
-        focusout: () => {
-          const input = this.children.password;
-          const inputHTML = (input as Input).getHTMLElement();
-          const { value } = inputHTML;
-          const valid = value.length > 0 && TestPassword(value);
-          console.log('valid', valid);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
-            }
-          }
-        },
       },
     });
   }
@@ -90,7 +78,6 @@ class LoginPage extends Block {
       TestLogin(data.login!.toString())
     && TestPassword(data.password!.toString())
     ) {
-      console.log('first888');
       AuthController.signin(data);
     }
   }

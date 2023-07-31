@@ -19,12 +19,6 @@ class SigninPage extends Block {
     this.children.link = new Link({
       href: '/messenger',
       label: 'Войти',
-      // events: {
-      //   click: (e:any) => {
-      //     e.preventDefault();
-      //     Router.go('/login');
-      //   },
-      // },
     });
     this.children.button = new Button({
       label: 'Зарегистрироваться',
@@ -211,42 +205,6 @@ class SigninPage extends Block {
         },
       },
     });
-    // this.children.form = new Form({
-    //   view: 'signin',
-    //   events: {
-    //     submit: (e:any) => {
-    //       e.preventDefault();
-    //       const formData = new FormData(e.target);
-    //       const email = formData.get('email');
-    //       const firstName = formData.get('first_name');
-    //       const secondName = formData.get('second_name');
-    //       const phone = formData.get('phone');
-    //       const login = formData.get('login');
-    //       const password = formData.get('password');
-    //       const repeatPassword = formData.get('repeat_password');
-
-    //       if (
-    //         TestEmail(email!.toString())
-    //         && TestName(firstName!.toString())
-    //         && TestName(secondName!.toString())
-    //         && TestPhone(phone!.toString())
-    //         && TestLogin(login!.toString())
-    //         && TestPassword(password!.toString())
-    //         && TestPassword(repeatPassword!.toString())
-    //       ) {
-    //         console.log('signinData', {
-    //           email,
-    //           firstName,
-    //           secondName,
-    //           phone,
-    //           login,
-    //           password,
-    //           repeatPassword,
-    //         });
-    //       }
-    //     },
-    //   },
-    // });
   }
 
   onSubmit() {
@@ -269,7 +227,7 @@ class SigninPage extends Block {
       console.log('signup');
       AuthController.signup(data);
     } else {
-      throw new Error('поля заполнены неправильно')
+      throw new Error('поля заполнены неправильно');
     }
   }
 

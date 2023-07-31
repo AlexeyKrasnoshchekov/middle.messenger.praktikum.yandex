@@ -1,3 +1,5 @@
+/* eslint-disable no-constructor-return */
+import Block from './block';
 import Route from './route';
 
 class Router {
@@ -19,25 +21,30 @@ class Router {
     Router.__instance = this;
   }
 
-  use(pathname:string, block) {
+  use(pathname:string, block:Block) {
     const route = new Route(pathname, block, { rootQuery: this._rootQuery });
     this.routes.push(route);
     return this;
   }
 
   start() {
-    window.onpopstate = (event) => {
-      this._onRoute(event.currentTarget.location.pathname);
+    window.onpopstate = (event: PopStateEvent) => {
+      const target = event.currentTarget as Window;
+
+      this._onRoute(target.location.pathname);
     };
     this._onRoute(window.location.pathname);
   }
 
-  _onRoute(pathname) {
+  _onRoute(pathname:string) {
     const route = this.getRoute(pathname);
 
-    // if (!route || this._currentRoute) {
-    if (!route || this._currentRoute) {
-      if (this._currentRoute !== pathname) this._currentRoute.leave();
+    if (!route) {
+      return;
+    }
+
+    if (this._currentRoute && this._currentRoute !== route) {
+      this._currentRoute.leave();
     }
 
     this._currentRoute = route;
@@ -57,7 +64,7 @@ class Router {
     this.history.forward();
   }
 
-  getRoute(pathname) {
+  getRoute(pathname:string) {
     return this.routes.find((route) => route.match(pathname));
   }
 }

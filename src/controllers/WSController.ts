@@ -11,10 +11,11 @@ class WSController {
       return;
     }
 
-    const userId = store.getState().user!.id;
+    const state = store.getState();
+    const userId = state!.user!.id;
 
     // eslint-disable-next-line max-len
-    const wsTransport = new WSTransport(`wss://ya-praktikum.tech/ws/chats/${userId}/${id}/${token}`);
+    const wsTransport = new WSTransport(`wss://ya-praktikum.tech/ws/chats/${userId!}/${id!}/${token!}`);
 
     this.sockets.set(id, wsTransport);
 
@@ -25,8 +26,7 @@ class WSController {
   }
 
   private subscribe(transport: WSTransport, id: number) {
-    console.log('id444', id);
-    transport.on(WSTransportEvents.Message, (message) => this.onMessage(id, message));
+    transport.on(WSTransportEvents.Message, (message:any) => this.onMessage(id, message));
     transport.on(WSTransportEvents.Close, () => this.onClose(id));
   }
 
@@ -48,7 +48,13 @@ class WSController {
 
     messagesToAdd = [...currentMessages, ...messagesToAdd];
 
+    // let obj = {
+    //   messages: messagesToAdd,
+    //   id,
+    // }
+
     store.set(`messages.${id}`, messagesToAdd);
+    // store.set('messages', obj);
   }
 
   //   async setStore(id: number, messages:Message[]) {

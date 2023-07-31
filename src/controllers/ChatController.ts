@@ -24,9 +24,10 @@ class ChatController {
   async getChats(offset:number, limit: number, title: string) {
     const chats = await this.api.getChats(offset, limit, title);
 
-    chats.reverse().map(async (chat:ChatInfo) => {
+    chats.map(async (chat:ChatInfo) => {
       const token = await this.getToken(chat.id);
       // chat.token = token;
+      // chat.users = await this.getUsers(chat.id);
       await WSController.connect(chat.id, token);
     });
 
@@ -81,11 +82,14 @@ class ChatController {
     }
   }
 
-  async selectChat(chat: ChatInfo) {
-    console.log('selectChat', chat);
-    const users = await this.getUsers(chat.id);
-    chat.users = users;
-    store.set('selectedChat', chat);
+  async selectChat(chatId: number) {
+    console.log('selectChat', chatId);
+    const chatUsers = await this.getUsers(chatId);
+    const users = chatUsers!.map((user) => user.login);
+
+    store.set('selectedChatId', chatId);
+    store.set('chatUsers', users);
+    // store.set('selectedChat', selChat);
   }
 }
 

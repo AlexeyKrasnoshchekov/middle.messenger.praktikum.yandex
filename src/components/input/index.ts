@@ -13,6 +13,7 @@ interface InputProps {
     input: (arg0:any) => void
     focusout?: () => void
     change?: (arg0:any) => void
+    keydown?: (arg0:any) => void
   }
 }
 

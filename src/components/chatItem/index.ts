@@ -1,22 +1,20 @@
 import Avatar from '../avatar/index';
 import Block from '../../utils/block';
 import template from './chatItem.hbs';
-import { ChatInfo } from '../../api/ChatAPI';
-// import { State, withStore } from '../../utils/store';
 
 interface ChatItemProps {
   id: number;
   title: string;
   unread_count: number;
-  selectedChat?: ChatInfo;
+  selectedChatId?: number;
   events: {
-    click: () => void;
+    click: (e:MouseEvent) => void;
   }
 }
 
 class ChatItem extends Block {
   constructor(props: ChatItemProps) {
-    super(null, props);
+    super('fragment', props);
   }
 
   init() {
@@ -29,29 +27,25 @@ class ChatItem extends Block {
 
   render() {
     if (this.props.avatar) {
-      this.children.avatar.setProps({
+      (this.children.avatar as Block).setProps({
         src: `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}`,
       });
     }
 
+    // eslint-disable-next-line max-len
     const date = new Date(this.props.last_message?.time).toLocaleString('ru-RU', { timeZone: 'Europe/Moscow' });
     return this.compile(template, {
+      ...this.props,
+      // eslint-disable-next-line max-len
       sender: `${this.props.last_message?.user.first_name ? this.props.last_message?.user.first_name : ''} ${this.props.last_message?.user.second_name ? this.props.last_message?.user.second_name : ''}`,
       text: this.props.last_message?.content,
       time: date.split(' ')[1],
       date: date.split(' ')[0].replace(',', ''),
       unread: this.props.unread_count,
       title: `Title: ${this.props.title}`,
-      isSelected: this.props.id === this.props.selectedChat?.id,
+      isSelected: this.props.id === this.props.selectedChatId,
     });
   }
 }
-
-// function mapStateToProps(state: State) {
-//   console.log('rrr', state);
-//   return { ...state };
-// }
-
-// const ChatItem = withStore(mapStateToProps)(ChatItemBase);
 
 export default ChatItem;

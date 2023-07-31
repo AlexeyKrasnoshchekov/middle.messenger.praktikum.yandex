@@ -1,8 +1,9 @@
 import template from './mess.hbs';
 import { State, withStore } from '../../utils/store';
 import Block from '../../utils/block';
-import { Message } from '../../controllers/WSController';
 import MessageElem from '../message';
+import { Message } from '../../types/index';
+import { ChatInfo } from '../../api/ChatAPI';
 
 interface MessengesAreaProps {
   selectedChat: number | undefined;
@@ -10,38 +11,30 @@ interface MessengesAreaProps {
   userId: number;
 }
 
-class MessengesAreaBase extends Block<MessengesAreaProps> {
-  constructor(props: MessengesAreaProps) {
-    super(null, { ...props });
-
-    // store.on(StorageEvent.UpdateState, () => {
-    //   // вызываем обновление компонента, передав данные из хранилища
-    //   this.setProps(store.getState());
-    // });
+class MessengesAreaBase extends Block {
+  constructor() {
+    super('div', {});
   }
 
   protected init() {
     this.children.messages = [];
-    // this.children.profileLink = new Link({ to: '/profile', label: 'Профиль' });
   }
 
-  protected componentDidUpdate(oldProps: MessengesAreaProps, newProps: MessengesAreaProps): boolean {
-    this.children.messages = this.formatMessages(newProps.messages);
+  // eslint-disable-next-line max-len
+  protected componentDidUpdate(_oldProps: MessengesAreaProps, newProps: MessengesAreaProps): boolean {
+    this.children.messages = this.formatMessages(newProps.messages, newProps.userId);
 
     return true;
   }
 
   // eslint-disable-next-line class-methods-use-this
-  private formatMessages(messages: MessengesAreaProps, id:number) {
-    // console.log('props777888', messages);
-    return messages.map((data) => new MessageElem({ ...data, isMine: id === data.user_id }));
+  private formatMessages(messages: Message[], id:number) {
+    // eslint-disable-next-line max-len
+    return messages.map((data:Message) => new MessageElem({ ...data, isMine: id === data.user_id }));
   }
 
   protected render(): DocumentFragment {
-    console.log('props777888', this.props);
     if (this.props.messages) {
-      // console.log('this.props999', this.props.chats[0]);
-      // const selectedChat = this.props.selectedChat ? this.props.selectedChat : this.props.chats[0];
       this.children.messages = this.formatMessages(this.props.messages, this.props.userId);
     }
     return this.compile(template, { ...this.props });
@@ -49,29 +42,33 @@ class MessengesAreaBase extends Block<MessengesAreaProps> {
 }
 
 function mapStateToProps(state: State) {
-  console.log('state888', state);
+  let obj = {};
 
-  const { selectedChat } = state;
+  const { selectedChatId } = state;
   const { user } = state;
 
-  if (!selectedChat && user) {
-    return {
+  if (!selectedChatId && user) {
+    obj = {
       messages: [],
       selectedChat: undefined,
       userId: user.id,
     };
   }
+  if (state && state.chats) {
+    const [selectedChat] = state!.chats!.filter((chat:ChatInfo) => chat.id === selectedChatId);
 
-  if (selectedChat && user) {
-    console.log('selectedChat222', selectedChat!.id);
-    return {
-      messages: (state.messages || {})[selectedChat!.id] || [],
-      selectedChat,
-      userId: user.id,
-    };
+    if (selectedChat && user) {
+      obj = {
+        messages: (state.messages || {})[selectedChatId!] || [],
+        selectedChat,
+        userId: user.id,
+      };
+    }
   }
+
+  return obj;
 }
 
-const MessengesArea = withStore(mapStateToProps)(MessengesAreaBase);
+const MessengesArea:any = withStore(mapStateToProps)(MessengesAreaBase);
 
 export default MessengesArea;

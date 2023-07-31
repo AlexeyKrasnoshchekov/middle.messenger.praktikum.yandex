@@ -38,7 +38,6 @@ export class AuthAPI extends API {
   }
 
   signup(data: IRegisterData) {
-    console.log('data222', data);
     const options = {
       data,
     };

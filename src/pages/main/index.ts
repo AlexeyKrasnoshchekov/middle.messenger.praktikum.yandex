@@ -1,20 +1,19 @@
+/* eslint-disable max-len */
 import template from './main.hbs';
 import Block from '../../utils/block';
 import Button from '../../components/button/index';
 import Avatar from '../../components/avatar/index';
-import ChatItem from '../../components/chatItem/index';
 import Input from '../../components/input/index';
 import Link from '../../components/link/index';
-import AuthController from '../../controllers/AuthController';
-import store, { StorageEvent } from '../../utils/store';
+import { State, withStore } from '../../utils/store';
 import Modal from '../../components/modal';
 import ChatController from '../../controllers/ChatController';
 import ChatsList from '../../components/chatsList';
-import WSController from '~/controllers/WSController';
-import MessengesArea from '~components/messagesArea';
-// import { errorMessage } from '../../utils/ui';
+import WSController from '../../controllers/WSController';
+import MessengesArea from '../../components/messagesArea';
+import { ChatInfo } from '../../api/ChatAPI';
 
-class MainPage extends Block {
+class BaseMainPage extends Block {
   constructor() {
     super('main', {});
     this.element!.classList.add('page_main');
@@ -27,10 +26,10 @@ class MainPage extends Block {
     });
 
     // подписываемся на событие
-    store.on(StorageEvent.UpdateState, () => {
-      // вызываем обновление компонента, передав данные из хранилища
-      this.setProps(store.getState());
-    });
+    // store.on(StorageEvent.UpdateState, () => {
+    //   // вызываем обновление компонента, передав данные из хранилища
+    //   this.setProps(store.getState());
+    // });
 
     // закрытие открытых модалов при клике снаружи
     this.element!.addEventListener('click', (e) => {
@@ -39,10 +38,10 @@ class MainPage extends Block {
         .filter((child) => child instanceof Modal);
 
       modals.forEach((modal) => {
-        if (!e.composedPath().includes(modal.getContent())) {
-          if (modal.props.visible) {
-            modal.hide();
-            modal.setProps({ visible: false });
+        if (!e.composedPath().includes((modal as Modal).getHTMLElement())) {
+          if ((modal as Modal).getProps().visible) {
+            (modal as Block).hide();
+            (modal as Block).setProps({ visible: false });
           }
         }
       });
@@ -88,13 +87,12 @@ class MainPage extends Block {
         click: (e:MouseEvent) => {
           e.preventDefault();
           e.stopPropagation();
-          console.log('createChat');
-          if (this.children.createChatModal.props.visible) {
-            this.children.createChatModal.hide();
-            this.children.createChatModal.setProps({ visible: false });
+          if ((this.children.createChatModal as Modal).getProps().visible) {
+            (this.children.createChatModal as Block).hide();
+            (this.children.createChatModal as Block).setProps({ visible: false });
           } else {
-            this.children.createChatModal.show();
-            this.children.createChatModal.setProps({ visible: true });
+            (this.children.createChatModal as Block).show();
+            (this.children.createChatModal as Block).setProps({ visible: true });
           }
         },
       },
@@ -105,13 +103,12 @@ class MainPage extends Block {
         click: (e:MouseEvent) => {
           e.preventDefault();
           e.stopPropagation();
-          console.log('clicked', this.children.attachModal);
-          if (this.children.attachModal.props.visible) {
-            this.children.attachModal.hide();
-            this.children.attachModal.setProps({ visible: false });
+          if ((this.children.attachModal as Modal).getProps().visible) {
+            (this.children.attachModal as Block).hide();
+            (this.children.attachModal as Block).setProps({ visible: false });
           } else {
-            this.children.attachModal.show();
-            this.children.attachModal.setProps({ visible: true });
+            (this.children.attachModal as Block).show();
+            (this.children.attachModal as Block).setProps({ visible: true });
           }
         },
       },
@@ -135,13 +132,12 @@ class MainPage extends Block {
         click: (e:MouseEvent) => {
           e.preventDefault();
           e.stopPropagation();
-          console.log('clicked', this.children.attachModal);
-          if (this.children.menuModal.props.visible) {
-            this.children.menuModal.hide();
-            this.children.menuModal.setProps({ visible: false });
+          if ((this.children.menuModal as Modal).getProps().visible) {
+            (this.children.menuModal as Block).hide();
+            (this.children.menuModal as Block).setProps({ visible: false });
           } else {
-            this.children.menuModal.show();
-            this.children.menuModal.setProps({ visible: true });
+            (this.children.menuModal as Block).show();
+            (this.children.menuModal as Block).setProps({ visible: true });
           }
         },
       },
@@ -156,26 +152,13 @@ class MainPage extends Block {
           e.preventDefault();
           e.stopPropagation();
 
-          if (this.children.avatarModal.props.visible) {
-            this.children.avatarModal.hide();
-            this.children.avatarModal.setProps({ visible: false });
+          if ((this.children.avatarModal as Modal).getProps().visible) {
+            (this.children.avatarModal as Block).hide();
+            (this.children.avatarModal as Block).setProps({ visible: false });
           } else {
-            this.children.avatarModal.show();
-            this.children.avatarModal.setProps({ visible: true });
+            (this.children.avatarModal as Block).show();
+            (this.children.avatarModal as Block).setProps({ visible: true });
           }
-        },
-      },
-    });
-    this.children.chatItem = new ChatItem({
-      src: '',
-      sender: 'Виктор',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, rerum.',
-      time: '10:15',
-      unread: true,
-      events: {
-        click: (e) => {
-          e.preventDefault();
-          console.log('clicked');
         },
       },
     });
@@ -192,14 +175,16 @@ class MainPage extends Block {
           e.preventDefault();
           console.log('typed');
         },
-        // focusout: (e) => {
-        //   e.preventDefault();
-        //   const message = e.target.value;
-        //   if (message.length === 0) {
-        //     errorMessage(e.target.id, 'Введите сообщение перед отправкой');
-        //     e.target.classList.add('invalid');
-        //   }
-        // },
+        keydown: (e) => {
+          if (e.keyCode === 13) {
+            const input = this.children.inputMessage as Input;
+            const message = input.getValue();
+            console.log('clicked', message);
+            input.setValue('');
+
+            WSController.sendMessage(this.props.selectedChat!.id, message);
+          }
+        },
       },
     });
     this.children.inputSearch = new Input({
@@ -220,22 +205,12 @@ class MainPage extends Block {
     this.children.linkLogin = new Link({
       href: '/',
       label: 'Login',
-      // events: {
-      //   click: (e:any) => {
-      //     e.preventDefault();
-      //     Router.go('/login');
-      //   },
-      // },
     });
   }
 
-  protected componentDidUpdate(oldProps: State, newProps: State): boolean {
-    if (newProps.selectedChat) {
-      this.children.avatar.setProps({
-        src: newProps.selectedChat.avatar !== null ? `https://ya-praktikum.tech/api/v2/resources${newProps.selectedChat.avatar}` : undefined,
-      });
-
-      // this.setProps({ selectedChat: newProps.selectedChat });
+  protected componentDidUpdate(_oldProps: State, newProps: State): boolean {
+    if (newProps.chatUsers) {
+      this.setProps({ users: newProps.chatUsers });
     }
 
     return true;
@@ -244,26 +219,46 @@ class MainPage extends Block {
   // eslint-disable-next-line class-methods-use-this
   render() {
     if (this.props.selectedChat) {
-      if (this.props.selectedChat.avatar !== null) {
-        this.children.avatar.setProps({
-          src: `https://ya-praktikum.tech/api/v2/resources${this.props.selectedChat.avatar}`,
-        });
-      }
+      (this.children.avatar as Block).setProps({
+        src: this.props.selectedChat!.avatar ? `https://ya-praktikum.tech/api/v2/resources${this.props.selectedChat!.avatar}` : undefined,
+      });
     }
+
     if (this.props.isOpenUserModal) {
-      this.children.userModal.show();
-      this.children.userModal.setProps({
+      (this.children.userModal as Block).show();
+      (this.children.userModal as Block).setProps({
         visible: this.props.isOpenUserModal,
       });
     } else {
-      this.children.userModal.hide();
-      this.children.userModal.setProps({
+      (this.children.userModal as Block).hide();
+      (this.children.userModal as Block).setProps({
         visible: this.props.isOpenUserModal,
       });
     }
 
-    return this.compile(template, { ...this.props.selectedChat });
+    return this.compile(template, { ...this.props });
   }
 }
+
+function mapStateToProps(state: State) {
+  const obj = {};
+
+  if (state.selectedChatId) {
+    if (state.chats) {
+      const [selectedChat] = state!.chats!.filter((chat:ChatInfo) => chat.id === state.selectedChatId);
+      Object.assign(obj, { selectedChat });
+    }
+  }
+
+  if (state.chatUsers) {
+    Object.assign(obj, { users: state.chatUsers });
+  }
+
+  Object.assign(obj, { isOpenUserModal: state.isOpenUserModal });
+
+  return { ...obj };
+}
+
+const MainPage = withStore(mapStateToProps)(BaseMainPage);
 
 export default MainPage;

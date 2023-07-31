@@ -38,7 +38,6 @@ class ChatAPI extends API {
   }
 
   getChats(offset: number, limit: number, title: string): Promise<ChatInfo[]> {
-    console.log('getChats');
     const options = {
       data: {
         offset,

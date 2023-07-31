@@ -1,4 +1,5 @@
 import API from './api';
+import { IUser } from './AuthAPI';
 
 export interface IUserData {
   first_name: string;
@@ -37,7 +38,7 @@ export class UserAPI extends API {
     return this.http.get(`?id=${id}`);
   }
 
-  searchUser(login:string): Promise<IUserData> {
+  searchUser(login:string): Promise<IUser[]> {
     const data = { login };
     const options = {
       data,

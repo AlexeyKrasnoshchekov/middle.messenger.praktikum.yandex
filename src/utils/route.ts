@@ -4,11 +4,11 @@ export interface Props {
   rootQuery: string
 }
 
-function isEqual(lhs, rhs) {
+function isEqual(lhs:string, rhs:string):boolean {
   return lhs === rhs;
 }
 
-function render(query, block) {
+function render(query:string, block:Block) {
   const root = document.querySelector(query);
   root?.append(block.getContent()!);
   return root;
@@ -31,7 +31,7 @@ class Route {
     this._props = props;
   }
 
-  navigate(pathname) {
+  navigate(pathname:string) {
     if (this.match(pathname)) {
       this._pathname = pathname;
       this.render();
@@ -44,7 +44,7 @@ class Route {
     }
   }
 
-  match(pathname) {
+  match(pathname:string) {
     return isEqual(pathname, this._pathname);
   }
 

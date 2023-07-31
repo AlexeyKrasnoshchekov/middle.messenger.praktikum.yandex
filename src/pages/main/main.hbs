@@ -25,21 +25,24 @@
           </aside>
           <section class="chat_place">
                <div class="chat_place_top">
-                         {{#if id }}
-                              <span>{{{avatar}}}</span>
-                         {{/if}}
+
+                         <span>{{{avatar}}}</span>
+
                          
                          {{{avatarModal}}}
-                         <p class="chat_title">Имя чата: {{title}}</p>
+                         <p class="chat_title">Имя чата: {{selectedChat.title}}</p>
                          <ul class="chat_users">
                               <span>Учасники:</span>
                               {{#each users}}
-                                   <li>{{this.login}}</li>
+                                   <li>{{this}}</li>
                               {{/each}}
                          </ul>
 
                     <span class="chat_menu">
-                         {{{buttonMenu}}}
+                         {{#if selectedChat }}
+                              <span>{{{buttonMenu}}}</span>
+                         {{/if}}
+                         
                          {{{menuModal}}}
                          {{{userModal}}}
                     </span>

@@ -9,6 +9,7 @@ interface ButtonProps {
   icon?:HTMLElement,
   events?: {
     click: (arg0:any) => void
+    keydown?: (arg0:any) => void
   }
 }
 

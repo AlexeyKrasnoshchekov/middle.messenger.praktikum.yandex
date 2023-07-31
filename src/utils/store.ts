@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import EventBus from './event-bus';
-import { set } from './index';
+import { isEqual, set } from './index';
 import { ChatInfo } from '../api/ChatAPI';
 import { IUser } from '../api/AuthAPI';
 import { Message } from '../types/index';
@@ -12,7 +12,9 @@ export interface State {
   userModalAction: string;
   chats?: ChatInfo[];
   messages: Record<number, Message[]>;
+  selectedChatId?: number;
   selectedChat?: ChatInfo;
+  chatUsers?: string[];
 }
 
 export enum StorageEvent {
@@ -33,7 +35,6 @@ class Store extends EventBus {
 
   set(path: string, value: unknown) {
     set(this.state, path, value);
-
     this.emit(StorageEvent.UpdateState, this.state);
   }
 }
@@ -43,11 +44,20 @@ const store = new Store();
 export function withStore(mapStateToProps: (state: State) => any) {
   return (Component: any) => class extends Component {
     constructor(props: any) {
-      super('div', { ...props, ...mapStateToProps(store.getState()) });
+      // сохраняем начальное состояние
+      const state = store.getState();
+
+      super('div', { ...props, ...mapStateToProps(state) });
 
       store.on(StorageEvent.UpdateState, () => {
-        const propsFromState = mapStateToProps(store.getState());
-        this.setProps(propsFromState);
+        const newState = mapStateToProps(store.getState());
+
+        // если что-то из используемых данных поменялось, обновляем компонент
+        if (!isEqual(state, newState)) {
+          this.setProps({ ...newState });
+        }
+
+        this.setProps(newState);
       });
     }
   };

@@ -20,7 +20,6 @@ class UserController {
 
   async changeAvatar(data: FormData) {
     try {
-      console.log('data111', data.get('file'));
       await this.api.changeAvatar(data);
 
       await AuthController.fetchUser();
@@ -31,7 +30,6 @@ class UserController {
 
   async changePassword(data: IPasswordData) {
     try {
-      console.log('data111', data);
       await this.api.changePassword(data);
       await AuthController.logout();
     } catch (error) {
@@ -40,13 +38,9 @@ class UserController {
   }
 
   async searchUser(login: string) {
-    try {
-      console.log('data111', login);
-      const user = await this.api.searchUser(login);
-      return user;
-    } catch (error) {
-      console.log(error);
-    }
+    const user = await this.api.searchUser(login);
+
+    return user;
   }
 
   async getUser(id:string) {
