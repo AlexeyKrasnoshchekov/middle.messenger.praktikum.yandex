@@ -6,9 +6,6 @@
           {{{avatar}}}
           {{{avatarModal}}}
           <div class="profile_title">{{first_name}}</div>
-  
-
-
           {{#if isProfile}}
 
           <div class="profile">
@@ -42,7 +39,7 @@
           <div class="linkWrapper">{{{logout}}}  </div>
           {{else if isProfileChange}}
 
-          <div class="profile">
+          <form class="profile">
                <div class="page_profile_data  profile_change_input">
           <label for="login">Почта</label>
                {{{email1}}}
@@ -67,7 +64,7 @@
                <label for="chat_name">Имя в чате</label>
                {{{chatName}}}
                </div>
-          </div>
+          </form>
           
 
           {{{save}}}

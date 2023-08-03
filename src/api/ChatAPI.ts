@@ -85,8 +85,10 @@ class ChatAPI extends API {
     return response.token;
   }
 
-  getNewMessages(chatId: number) {
-    return this.http.get(`/new/${chatId}`);
+  async getNewMessages(chatId: number): Promise<number> {
+    const unread:{ unread_count:number } = await this.http.get(`/new/${chatId}`);
+    console.log('unread', unread.unread_count);
+    return unread.unread_count;
   }
 }
 

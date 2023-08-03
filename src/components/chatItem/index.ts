@@ -5,6 +5,7 @@ import template from './chatItem.hbs';
 interface ChatItemProps {
   id: number;
   title: string;
+  avatar: string;
   unread_count: number;
   selectedChatId?: number;
   events: {
@@ -25,6 +26,17 @@ class ChatItem extends Block {
     });
   }
 
+  // protected componentDidUpdate(_oldProps: ChatItemProps, newProps: ChatItemProps): boolean {
+  //   console.log('newProps111',newProps);
+  //   if (newProps.avatar) {
+  //     (this.children.avatar as Block).setProps({
+  //       src: `https://ya-praktikum.tech/api/v2/resources${newProps.avatar}`,
+  //     });
+  //   }
+
+  //   return true;
+  // }
+
   render() {
     if (this.props.avatar) {
       (this.children.avatar as Block).setProps({
@@ -41,7 +53,7 @@ class ChatItem extends Block {
       text: this.props.last_message?.content,
       time: date.split(' ')[1],
       date: date.split(' ')[0].replace(',', ''),
-      unread: this.props.unread_count,
+      unread: this.props.unread_count !== 0 ? this.props.unread_count : undefined,
       title: `Title: ${this.props.title}`,
       isSelected: this.props.id === this.props.selectedChatId,
     });

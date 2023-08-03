@@ -7,6 +7,7 @@ import Router from '../../utils/router';
 import AuthController from '../../controllers/AuthController';
 import Input from '../../components/input/index';
 import {
+  delErrorMessage,
   errorMessage, TestEmail, TestLogin, TestName, TestPassword, TestPhone,
 } from '../../utils/ui';
 import Modal from '../../components/modal';
@@ -23,7 +24,7 @@ class BaseProfile extends Block {
     this.children.button = new Button({
       view: 'back',
       events: {
-        click: (e: any) => {
+        click: (e) => {
           e.preventDefault();
           const state = store.getState();
           if (state.profileView === 'profile') {
@@ -90,6 +91,8 @@ class BaseProfile extends Block {
     this.children.save = new Button({
       label: 'Сохранить',
       view: 'form',
+      type: 'submit',
+      disabled: true,
       events: {
         click: () => this.onSubmit(),
       },
@@ -112,10 +115,10 @@ class BaseProfile extends Block {
           const inputHTML = (input as Input).getHTMLElement();
           const { value } = inputHTML;
           const valid = value.length > 0 && TestEmail(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Email не соответсвует требованиям');
-            }
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Email не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -138,10 +141,11 @@ class BaseProfile extends Block {
           const inputHTML = (input as Input).getHTMLElement();
           const { value } = inputHTML;
           const valid = value.length > 0 && TestLogin(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Логин не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Логин не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -163,10 +167,11 @@ class BaseProfile extends Block {
           const inputHTML = (input as Input).getHTMLElement();
           const { value } = inputHTML;
           const valid = value.length > 0 && TestName(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Имя не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Имя не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -188,10 +193,11 @@ class BaseProfile extends Block {
           const inputHTML = (input as Input).getHTMLElement();
           const { value } = inputHTML;
           const valid = value.length > 0 && TestName(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Фамилия не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Фамилия не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -213,10 +219,11 @@ class BaseProfile extends Block {
           const inputHTML = (input as Input).getHTMLElement();
           const { value } = inputHTML;
           const valid = value.length > 0 && TestLogin(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Имя в чате не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Имя в чате не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -239,10 +246,11 @@ class BaseProfile extends Block {
           const { value } = inputHTML;
 
           const valid = value.length > 0 && TestPhone(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Телефон не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Телефон не соответсвует требованиям, пример +79281112233');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -266,10 +274,10 @@ class BaseProfile extends Block {
           const { value } = inputHTML;
           const valid = value.length > 0 && TestPassword(value);
 
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
-            }
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -292,10 +300,11 @@ class BaseProfile extends Block {
           const { value } = inputHTML;
 
           const valid = value.length > 0 && TestPassword(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -323,13 +332,16 @@ class BaseProfile extends Block {
 
           if (valueNew !== valueRepeat) {
             errorMessage(inputHTML, 'Пароли не соответствуют');
+          } else {
+            delErrorMessage(inputHTML);
           }
 
           const valid = valueRepeat.length > 0 && TestPassword(valueRepeat);
-          if (!valid) {
-            if (valueRepeat.length > 0) {
-              errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
-            }
+
+          if (!valid && valueRepeat.length > 0) {
+            errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -356,17 +368,7 @@ class BaseProfile extends Block {
       delete data.newPassword;
       delete data.oldPassword;
 
-      if (
-        TestEmail(data.email!.toString())
-              && TestName(data.first_name!.toString())
-              && TestName(data.second_name!.toString())
-              && TestPhone(data.phone!.toString())
-              && TestLogin(data.login!.toString())
-              && TestEmail(data.email!.toString())
-              && TestLogin(data.display_name!.toString())
-      ) {
-        UserController.changeProfile(data);
-      }
+      UserController.changeProfile(data);
       store.set('profileView', 'profile');
     }
     if (state.profileView === 'profilePassword') {

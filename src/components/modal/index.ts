@@ -173,12 +173,15 @@ class Modal extends Block {
               const newChatUsers = state.chatUsers;
               const newChatUsers2 = [...newChatUsers!, user[0].login];
               store.set('chatUsers', newChatUsers2);
+              console.log('add');
             }
             if (this.props.userModalAction === 'del') {
               await ChatController.removeUser(state.selectedChatId!, user[0].id);
               const newChatUsers = (state.chatUsers as Array<string>).filter((chatUser) => chatUser !== user[0].login);
+              console.log('del');
               store.set('chatUsers', newChatUsers);
             }
+
             this.hide();
             store.set('isOpenUserModal', false);
           },
@@ -236,11 +239,17 @@ class Modal extends Block {
             e.preventDefault();
             const state = store.getState();
             if (window.location.pathname === '/messenger') {
-              formData.append('chatId', state.selectedChat!.toString());
-              ChatController.addAvatar(formData);
+              formData.append('chatId', state.selectedChatId!.toString());
+
+              ChatController.addAvatar(formData).finally(() => {
+                ChatController.getChats(0, 10, '');
+              });
             } else if (window.location.pathname === '/profile') {
-              UserController.changeAvatar(formData);
+              UserController.changeAvatar(formData).finally(() => {
+                ChatController.getChats(0, 10, '');
+              });
             }
+
             this.hide();
             formData.delete('avatar');
             this.setProps({ visible: false });

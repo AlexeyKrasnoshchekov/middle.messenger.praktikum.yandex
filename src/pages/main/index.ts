@@ -5,13 +5,14 @@ import Button from '../../components/button/index';
 import Avatar from '../../components/avatar/index';
 import Input from '../../components/input/index';
 import Link from '../../components/link/index';
-import { State, withStore } from '../../utils/store';
+import store, { State, withStore } from '../../utils/store';
 import Modal from '../../components/modal';
 import ChatController from '../../controllers/ChatController';
 import ChatsList from '../../components/chatsList';
 import WSController from '../../controllers/WSController';
 import MessengesArea from '../../components/messagesArea';
 import { ChatInfo } from '../../api/ChatAPI';
+import { delErrorMessage, errorMessage } from '../../utils/ui';
 
 class BaseMainPage extends Block {
   constructor() {
@@ -24,6 +25,10 @@ class BaseMainPage extends Block {
         isLoaded: true,
       });
     });
+
+    // setInterval(() => {
+    //   ChatController.getChats(0, 10, '');
+    // }, 5000);
 
     // подписываемся на событие
     // store.on(StorageEvent.UpdateState, () => {
@@ -118,11 +123,19 @@ class BaseMainPage extends Block {
       events: {
         click: () => {
           const input = this.children.inputMessage as Input;
+          const inputHTML = (input as Input).getHTMLElement();
           const message = input.getValue();
           console.log('clicked', message);
           input.setValue('');
 
-          WSController.sendMessage(this.props.selectedChat!.id, message);
+          if (!this.props.selectedChat) {
+            errorMessage(inputHTML, 'Выберите чат...');
+          } else if (message && message.length > 0 && /^[A-Za-z0-9]*$/.test(message)) {
+            WSController.sendMessage(this.props.selectedChat!.id, message);
+            delErrorMessage(inputHTML);
+          } else {
+            errorMessage(inputHTML, 'Напишите что-нибудь...');
+          }
         },
       },
     });
@@ -139,6 +152,18 @@ class BaseMainPage extends Block {
             (this.children.menuModal as Block).show();
             (this.children.menuModal as Block).setProps({ visible: true });
           }
+        },
+      },
+    });
+    this.children.delChat = new Button({
+      view: 'link',
+      label: 'Удалить чат',
+      events: {
+        click: () => {
+          const state = store.getState();
+          ChatController.removeChat(state.selectedChatId!).finally(() => {
+            ChatController.getChats(0, 10, '');
+          });
         },
       },
     });
@@ -178,11 +203,20 @@ class BaseMainPage extends Block {
         keydown: (e) => {
           if (e.keyCode === 13) {
             const input = this.children.inputMessage as Input;
+            const inputHTML = (input as Input).getHTMLElement();
             const message = input.getValue();
             console.log('clicked', message);
+            console.log('clicked111', message.length);
             input.setValue('');
 
-            WSController.sendMessage(this.props.selectedChat!.id, message);
+            if (!this.props.selectedChat) {
+              errorMessage(inputHTML, 'Выберите чат...');
+            } else if (message && message.length > 0 && /^[A-Za-z0-9]*$/.test(message)) {
+              WSController.sendMessage(this.props.selectedChat!.id, message);
+              delErrorMessage(inputHTML);
+            } else {
+              errorMessage(inputHTML, 'Напишите что-нибудь...');
+            }
           }
         },
       },
@@ -205,6 +239,22 @@ class BaseMainPage extends Block {
     this.children.linkLogin = new Link({
       href: '/',
       label: 'Login',
+    });
+    this.children.linkSignin = new Link({
+      href: '/signin',
+      label: 'Signin',
+    });
+    this.children.linkProfile = new Link({
+      href: '/profile',
+      label: 'Profile',
+    });
+    this.children.link404 = new Link({
+      href: '/notFound',
+      label: '404',
+    });
+    this.children.link500 = new Link({
+      href: '/error_500',
+      label: '500',
     });
   }
 

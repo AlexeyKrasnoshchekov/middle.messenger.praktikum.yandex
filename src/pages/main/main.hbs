@@ -7,10 +7,10 @@
                     <ul>
                          {{!-- <li><a href="/login" onclick="route()">Login</a></li> --}}
                          <li>{{{linkLogin}}}</li>
-                         <li><a href="/signin" onclick="route()">Signin</a></li>
-                         <li><a href="/profile" onclick="route()">Profile</a></li>
-                         <li><a href="/notFound" onclick="route()">404</a></li>
-                         <li><a href="/error_500" onclick="route()">500</a></li>
+                         <li>{{{linkSignin}}}</li>
+                         <li>{{{linkProfile}}}</li>
+                         <li>{{{link404}}}</li>
+                         <li>{{{link500}}}</li>
                     </ul>
                </nav>
                <div class="chat_top">
@@ -26,20 +26,24 @@
           <section class="chat_place">
                <div class="chat_place_top">
 
-                         <span>{{{avatar}}}</span>
-
-                         
+                    {{#if selectedChat }}
+                              <span>{{{avatar}}}</span>
                          {{{avatarModal}}}
                          <p class="chat_title">Имя чата: {{selectedChat.title}}</p>
+                         <span>{{{delChat}}}</span>
                          <ul class="chat_users">
                               <span>Учасники:</span>
                               {{#each users}}
                                    <li>{{this}}</li>
                               {{/each}}
                          </ul>
+                    {{/if}}
+
+                         
 
                     <span class="chat_menu">
                          {{#if selectedChat }}
+                              
                               <span>{{{buttonMenu}}}</span>
                          {{/if}}
                          

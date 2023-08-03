@@ -10,10 +10,10 @@ interface InputProps {
   name: string,
   required: boolean,
   events: {
-    input: (arg0:any) => void
+    input: (arg0:InputEvent) => void
     focusout?: () => void
     change?: (arg0:any) => void
-    keydown?: (arg0:any) => void
+    keydown?: (arg0:KeyboardEvent) => void
   }
 }
 

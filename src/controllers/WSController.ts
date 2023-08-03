@@ -37,23 +37,35 @@ class WSController {
   // eslint-disable-next-line class-methods-use-this
   private onMessage(id: number, messages: Message | Message[]) {
     let messagesToAdd: Message[] = [];
+    // let messages1 = 0;
+
+    console.log('messages', messages);
 
     if (Array.isArray(messages)) {
+      // messages1 = messages.length;
       messagesToAdd = messages.reverse();
-    } else {
+    } else if (messages.type !== 'user connected') {
       messagesToAdd.push(messages);
+      // messages1 += messages1;
     }
+
+    // console.log('messages1', messages1);
 
     const currentMessages = (store.getState().messages || {})[id] || [];
 
     messagesToAdd = [...currentMessages, ...messagesToAdd];
 
-    // let obj = {
-    //   messages: messagesToAdd,
-    //   id,
-    // }
+    // const { chats } = store.getState();
+    // const selChat = chats!.filter((chat) => chat.id === id);
+
+    // selChat![0].unread_count = messages1;
+    // selChat![0].last_message.content = messagesToAdd[messagesToAdd.length - 1].content;
+    // selChat![0].last_message.time = messagesToAdd[messagesToAdd.length - 1].time;
 
     store.set(`messages.${id}`, messagesToAdd);
+
+    // console.log('selChat', selChat);
+    // chats![id].last_message = messagesToAdd[messagesToAdd.length - 1];
     // store.set('messages', obj);
   }
 

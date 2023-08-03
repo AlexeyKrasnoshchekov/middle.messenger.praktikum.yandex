@@ -1,6 +1,7 @@
 import template from './signin.hbs';
 import Block from '../../utils/block';
 import {
+  delErrorMessage,
   errorMessage,
   TestEmail, TestLogin, TestName, TestPassword, TestPhone,
 } from '../../utils/ui';
@@ -41,15 +42,18 @@ class SigninPage extends Block {
           console.log('typed');
         },
         focusout: () => {
-          const input = this.children.password;
+          const input = this.children.email;
           const inputHTML = (input as Input).getHTMLElement();
           const { value } = inputHTML;
+          console.log('value', value);
 
           const valid = value.length > 0 && TestEmail(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Email не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            console.log('valid222');
+            errorMessage(inputHTML, 'Email не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -71,10 +75,11 @@ class SigninPage extends Block {
           const inputHTML = (input as Input).getHTMLElement();
           const { value } = inputHTML;
           const valid = value.length > 0 && TestLogin(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Логин не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Логин не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -96,10 +101,11 @@ class SigninPage extends Block {
           const inputHTML = (input as Input).getHTMLElement();
           const { value } = inputHTML;
           const valid = value.length > 0 && TestName(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Имя не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Имя не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -122,10 +128,10 @@ class SigninPage extends Block {
           const { value } = inputHTML;
           const valid = value.length > 0 && TestName(value);
 
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Фамилия не соответсвует требованиям');
-            }
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Фамилия не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -147,10 +153,11 @@ class SigninPage extends Block {
           const inputHTML = (input as Input).getHTMLElement();
           const { value } = inputHTML;
           const valid = value.length > 0 && TestPhone(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Телефон не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Телефон не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -172,10 +179,11 @@ class SigninPage extends Block {
           const inputHTML = (input as Input).getHTMLElement();
           const { value } = inputHTML;
           const valid = value.length > 0 && TestPassword(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
+          } else {
+            delErrorMessage(inputHTML);
           }
         },
       },
@@ -193,14 +201,23 @@ class SigninPage extends Block {
           console.log('typed');
         },
         focusout: () => {
-          const input = this.children.repeatPassword;
+          const input = this.children.password;
           const inputHTML = (input as Input).getHTMLElement();
-          const { value } = inputHTML;
+          // eslint-disable-next-line prefer-destructuring
+          const value = inputHTML.value;
+
+          const inputRep = this.children.repeatPassword;
+          const inputHTMLRep = (inputRep as Input).getHTMLElement();
+          const valueRep = inputHTMLRep.value;
+
           const valid = value.length > 0 && TestPassword(value);
-          if (!valid) {
-            if (value.length > 0) {
-              errorMessage(inputHTML, 'Пароль не соответсвует требованиям');
-            }
+
+          if (!valid && value.length > 0) {
+            errorMessage(inputHTMLRep, 'Пароль не соответсвует требованиям');
+          } else if (value !== valueRep) {
+            errorMessage(inputHTMLRep, 'Пароли не соответствуют');
+          } else {
+            delErrorMessage(inputHTMLRep);
           }
         },
       },

@@ -7,17 +7,24 @@ interface ButtonProps {
   view:string,
   type?:string,
   icon?:HTMLElement,
+  disabled?:boolean,
   events?: {
-    click: (arg0:any) => void
-    keydown?: (arg0:any) => void
+    click: (arg0:MouseEvent) => void
+    keydown?: (arg0:KeyboardEvent) => void
   }
 }
 
 class Button extends Block {
   constructor(props: ButtonProps) {
     super('button', props);
+
+    if (props.disabled) {
+      this.element!.classList.add('disabled');
+    }
     if (props.view === 'form') {
-      // this.element!.setAttribute('type', 'submit');
+      if (props.type === 'submit') {
+        this.element!.setAttribute('type', 'submit');
+      }
       this.element!.classList.add('button_form');
     }
     if (props.view === 'back') {

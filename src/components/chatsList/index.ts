@@ -11,9 +11,9 @@ interface ChatsListProps {
   selectedChatId: number;
 }
 
-class ChatsListBase extends Block<ChatsListProps> {
-  constructor(props: ChatsListProps) {
-    super('fragment', { ...props });
+class ChatsListBase extends Block {
+  constructor() {
+    super('fragment', {});
   }
 
   protected init() {
@@ -34,6 +34,14 @@ class ChatsListBase extends Block<ChatsListProps> {
     }));
   }
 
+  protected componentDidUpdate(_oldProps: ChatsListProps, newProps: ChatsListProps): boolean {
+    if (newProps.chats) {
+      this.children.chats = this.createChats(newProps.chats, newProps.selectedChatId);
+    }
+
+    return true;
+  }
+
   protected render(): DocumentFragment {
     if (this.props.chats) {
       this.children.chats = this.createChats(this.props.chats, this.props.selectedChatId);
@@ -43,6 +51,7 @@ class ChatsListBase extends Block<ChatsListProps> {
 }
 
 function mapStateToProps(state: State) {
+  console.log('state111', state);
   return { chats: state.chats, selectedChatId: state.selectedChatId };
 }
 

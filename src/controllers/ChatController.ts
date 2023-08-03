@@ -26,11 +26,10 @@ class ChatController {
 
     chats.map(async (chat:ChatInfo) => {
       const token = await this.getToken(chat.id);
-      // chat.token = token;
-      // chat.users = await this.getUsers(chat.id);
+
       await WSController.connect(chat.id, token);
     });
-
+    console.log('chats777', chats);
     store.set('chats', chats);
   }
 
@@ -89,7 +88,6 @@ class ChatController {
 
     store.set('selectedChatId', chatId);
     store.set('chatUsers', users);
-    // store.set('selectedChat', selChat);
   }
 }
 
