@@ -2,7 +2,7 @@
 MiddleChat
 
 <b>ССЫЛКА НА NETLIFY:</b><br>
-https://magenta-blini-565743.netlify.app/
+https://venerable-alpaca-e72705.netlify.app/
 
 <b>ССЫЛКА НА МАКЕТ:</b><br>
 https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?type=design&t=SuvxV7IGsU98lPxB-0
@@ -11,7 +11,7 @@ https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?type=design
 Приложение позволяет общаться с друзьями и коллегами в режиме онлайн, создавать коллективные чаты, обмениваться файлами.
 
 <b>СТАТУС ПРОЕКТА:</b><br>
-Проект находится в разработке. На данный момент готова только разметка страниц.
+Проект находится в разработке. На данный момент готовы интерфейсы и базовый функционал.
 
 <b>ПРОЦЕСС УСТАНОВКИ:</b><br>
 
@@ -34,6 +34,9 @@ http://localhost:3000/login
 
 Регистрация:
 http://localhost:3000/signin
+
+Мессенджер:
+http://localhost:3000/messenger
 
 Профиль пользователя:
 http://localhost:3000/profile

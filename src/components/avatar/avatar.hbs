@@ -1,1 +1,6 @@
-<img class="{{class}}" alt="{{alt}}" src="{{alt}}"/>
+
+{{#if src }}
+    <img class="{{class}}" alt="{{alt}}" src="{{src}}"/>
+{{ else }}
+    <div class="{{class}}"></div>
+{{/if}}

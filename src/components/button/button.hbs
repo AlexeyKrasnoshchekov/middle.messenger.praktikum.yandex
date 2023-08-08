@@ -1,11 +1,26 @@
 {{#if isFormButton}}
   {{label}}
+{{else if isLinkButton}}
+  {{label}}
 {{else if isAttachButton}}
-  <i class="icon fa fa-paperclip" aria-hidden="true"></i>
+  {{{icon}}}
 {{else if isSendButton}}
-  <i class="icon fa fa-arrow-circle-right" aria-hidden="true"></i>
+  {{{icon}}}
 {{else if isBackButton}}
-  <i class="icon fa fa-arrow-circle-left" aria-hidden="true"></i>
+  {{{icon}}}
 {{else if isMenuButton}}
-  <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+  {{{icon}}}
+{{else if isImageButton}}
+  {{{icon}}}{{label}}
+{{else if isFileButton}}
+  {{{icon}}}{{label}}
+{{else if isLocationButton}}
+  {{{icon}}}{{label}}
+{{else if isPlusButton}}
+  {{{icon}}}{{label}}
+{{else if isMinusButton}}
+  {{{icon}}}{{label}}
+{{else if isCloseButton}}
+  {{{icon}}}
+  
 {{/if}}

@@ -21,7 +21,7 @@ const TestPhone = (str:string):boolean => {
 };
 
 const TestName = (str:string):boolean => {
-  if (/^[A-ZА-Я]{1}[a-zа-я\\-]$/.test(str) === false) {
+  if (/^[A-ZА-Я]{1}[a-zа-я\\-]/.test(str) === false) {
     return false;
   }
   return true;
@@ -46,12 +46,22 @@ const TestMessage = (str:string):boolean => {
   return true;
 };
 
-const errorMessage = (id:string, message:string) => {
-  const error = document.getElementById(`error_${id}`);
+const errorMessage = (elem:HTMLInputElement, message:string) => {
+  console.log('message', message);
+  const error = document.getElementById(`error_${elem.id}`);
   error!.textContent = message;
+  elem.classList.add('invalid');
+};
+const delErrorMessage = (elem:HTMLInputElement) => {
+  const error = document.getElementById(`error_${elem.id}`);
+  error!.textContent = '';
+
+  if (elem.classList.contains('invalid')) {
+    elem.classList.remove('invalid');
+  }
 };
 
 export {
   toggleAttachMenu, TestLogin, TestPhone, TestEmail, TestName, TestPassword, TestMessage,
-  errorMessage,
+  errorMessage, delErrorMessage,
 };

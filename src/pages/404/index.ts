@@ -10,7 +10,7 @@ class NotFoundPage extends Block {
 
   init() {
     this.children.link = new Link({
-      href: '/',
+      href: '/messenger',
       label: 'Назад к чатам',
     });
   }

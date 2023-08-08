@@ -4,7 +4,90 @@
      </div>
      <div class="page_profile_view">
           {{{avatar}}}
-          <p class="profile_user_name">Вадим</p>
-          {{{profileForm}}}        
+          {{{avatarModal}}}
+          <div class="profile_title">{{first_name}}</div>
+          {{#if isProfile}}
+
+          <div class="profile">
+               <div class="page_profile_data">
+                    <span>Почта</span>
+                    <span>{{email}}</span>
+               </div>
+               <div class="page_profile_data">
+                    <span>Логин</span>
+                    <span>{{login}}</span>
+               </div>
+               <div class="page_profile_data">
+                    <span>Имя</span>
+                    <span>{{first_name}}</span>
+               </div>
+               <div class="page_profile_data">
+                    <span>Фамилия</span>
+                    <span>{{second_name}}</span>
+               </div>
+               <div class="page_profile_data">
+                    <span>Имя в чате</span>
+                    <span>{{display_name}}</span>
+               </div>
+               <div class="page_profile_data">
+                    <span>Телефон</span>
+                    <span>{{phone}}</span>
+               </div>
+          </div>
+          <div class="linkWrapper">{{{changeProfile}}} </div>
+          <div class="linkWrapper">{{{changePassword}}}  </div>
+          <div class="linkWrapper">{{{logout}}}  </div>
+          {{else if isProfileChange}}
+
+          <form class="profile">
+               <div class="page_profile_data  profile_change_input">
+          <label for="login">Почта</label>
+               {{{email1}}}
+               </div>
+          <div class="page_profile_data profile_change_input">
+               <label for="password">Логин</label>
+               {{{login1}}}
+               </div>
+          <div class="page_profile_data profile_change_input">
+               <label for="first_name">Имя</label>
+               {{{firstName}}}
+               </div>
+          <div class="page_profile_data profile_change_input">
+               <label for="second_name">Фамилия</label>
+               {{{lastName}}}
+               </div>
+          <div class="page_profile_data profile_change_input">
+               <label for="phone">Телефон</label>
+               {{{phone1}}}
+               </div>
+          <div class="page_profile_data profile_change_input">
+               <label for="chat_name">Имя в чате</label>
+               {{{chatName}}}
+               </div>
+          </form>
+          
+
+          {{{save}}}
+
+          {{else if isProfilePassword}}
+
+          <div class="profile">
+               <div class="page_profile_data  profile_change_input">
+                    <label for="oldPassword">Старый пароль</label>
+                    {{{oldPassword}}}
+               </div>
+               <div class="page_profile_data  profile_change_input">
+                    <label for="newPassword">Новый пароль</label>
+                    {{{newPassword}}}
+                    </div>
+               <div class="page_profile_data profile_change_input">
+                    <label for="new_password_repeat">Новый пароль</label>
+                    {{{repeatNewPassword}}}
+                    </div>
+          </div>
+               
+               {{{save}}}
+
+          {{/if}}    
      </div>
 

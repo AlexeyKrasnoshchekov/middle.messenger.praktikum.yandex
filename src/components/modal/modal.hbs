@@ -1,0 +1,35 @@
+
+  {{#if isAttachModal}}
+        {{{image}}}
+        {{{file}}}
+        {{{location}}}
+ 
+  {{else if isMenuModal}}
+    {{{plus}}}
+    {{{minus}}}
+  {{else if isChatModal}}
+    {{{chatName}}}
+    {{{createChat}}}
+  {{else if isUserModal}}
+  <div class="modal_user">
+    <span class="modal_close">{{{closeModal}}}</span>
+    <div class="modal_user_form">
+      {{{userLogin}}}
+      {{{action}}}   
+    </div>
+  </div>
+        
+  {{else if isAvatarModal}}
+  
+  <div class="modal_avatar">
+    <span class="modal_close">{{{closeModal}}}</span>
+    <div class="modal_user_form">
+      <span>Загрузите файл</span>
+      {{{inputFile}}}
+      {{{changeAvatar}}}  
+    </div>
+  </div>
+      
+    
+  {{/if}}
+

@@ -4,7 +4,10 @@ import template from './avatar.hbs';
 interface AvatarProps {
   class:string,
   alt: string,
-  src: string
+  src: string,
+  events?: {
+    click: (arg0:MouseEvent) => void
+  }
 }
 
 class Avatar extends Block {

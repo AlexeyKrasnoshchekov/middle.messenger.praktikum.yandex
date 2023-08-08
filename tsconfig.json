@@ -37,6 +37,42 @@
             ],
             "~/*": [
                 "src/*"
+            ],
+            "~api/*": [
+                "src/api/*"
+            ],
+            "~controllers/*": [
+                "src/controllers/*"
+            ],
+            "~hocs/*": [
+                "src/hocs/*"
+            ],
+            "~modal/*": [
+                "src/components/modal/*"
+            ],
+            "~button copy/*": [
+                "src/components/button copy/*"
+            ],
+            "~icon/*": [
+                "src/components/icon/*"
+            ],
+            "~ChatsList/*": [
+                "src/components/ChatsList/*"
+            ],
+            "~chatsList/*": [
+                "src/components/chatsList/*"
+            ],
+            "~chatsList copy/*": [
+                "src/components/chatsList copy/*"
+            ],
+            "~messagesArea/*": [
+                "src/components/messagesArea/*"
+            ],
+            "~messagesArea copy/*": [
+                "src/components/messagesArea copy/*"
+            ],
+            "~message/*": [
+                "src/components/message/*"
             ]
         }
     }
